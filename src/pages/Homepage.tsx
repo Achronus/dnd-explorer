@@ -1,64 +1,21 @@
-import Link from "next/link";
+import Card from "@/components/Card";
+import Hero from "@/components/Hero";
+import { HomepageCategories } from "@/lib/constants";
 
 const Categories = () => {
   return (
-    <>
-      <div className="flex gap-8 justify-center items-center">
-        <div className="card w-96 bg-base-100 shadow-xl">
-          <Link href="/spells">
-            <div className="card-body">
-              <h2 className="card-title">Shoes!</h2>
-              <p>
-                If a dog chews shoes whose shoes does he
-                choose?
-              </p>
-            </div>
-            <figure>
-              <img
-                src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.jpg"
-                alt="Shoes"
-              />
-            </figure>
-          </Link>
-        </div>
-        <div className="card w-96 bg-base-100 shadow-xl">
-          <div className="card-body">
-            <h2 className="card-title">Shoes!</h2>
-            <p>
-              If a dog chews shoes whose shoes does he
-              choose?
-            </p>
-          </div>
-          <figure>
-            <img
-              src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.jpg"
-              alt="Shoes"
-            />
-          </figure>
-        </div>
-        <div className="card w-96 bg-base-100 shadow-xl">
-          <div className="card-body">
-            <h2 className="card-title">Shoes!</h2>
-            <p>
-              If a dog chews shoes whose shoes does he
-              choose?
-            </p>
-          </div>
-          <figure>
-            <img
-              src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.jpg"
-              alt="Shoes"
-            />
-          </figure>
-        </div>
-      </div>
-    </>
+    <section className="grid grid-cols-3 gap-8 justify-items-center items-center mt-10">
+      {HomepageCategories.map((category) => (
+        <Card {...category} />
+      ))}
+    </section>
   );
 };
 
 const Homepage = () => {
   return (
     <main className="">
+      <Hero />
       <Categories />
     </main>
   );
