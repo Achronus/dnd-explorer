@@ -1,14 +1,6 @@
-type ImageType = {
-  href: string;
-  alt: string;
-};
+import { CardDetailsType } from "../types/cards";
 
-type CardDetailsType = {
-  url: string;
-  title: string;
-  description: string;
-  img: ImageType;
-};
+const ApiUrlRoot = "https://www.dnd5eapi.co/api";
 
 const HomepageCategories: CardDetailsType[] = [
   {
@@ -40,5 +32,4 @@ const HomepageCategories: CardDetailsType[] = [
   },
 ];
 
-export { HomepageCategories };
-export type { CardDetailsType, ImageType };
+export { ApiUrlRoot, HomepageCategories };
