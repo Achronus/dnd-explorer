@@ -1,13 +1,8 @@
-import { CardDetailsType } from "@/lib/constants";
+import { CardDetailsType } from "@/types/cards";
 import Image from "next/image";
 import Link from "next/link";
 
-const Card = ({
-  url,
-  title,
-  description,
-  img,
-}: CardDetailsType) => {
+const Card = ({ title, description, url, img }: CardDetailsType) => {
   return (
     <div className="card w-96 bg-base-100 shadow-xl">
       <Link href={url}>

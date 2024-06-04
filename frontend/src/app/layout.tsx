@@ -19,9 +19,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${rubik.className} min-h-screen flex flex-col`}
-      >
+      <body className={`${rubik.className} min-h-screen flex flex-col`}>
         <Navbar />
         {children}
         <Footer />
