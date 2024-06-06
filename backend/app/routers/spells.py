@@ -8,8 +8,14 @@ router = APIRouter(prefix="/spells", tags=["spells"])
 
 
 @router.get("/", response_model=list[SpellOverview])
-async def spells_overview():
-    result = await DBSpellDetails.find({}).limit(10).to_list()
+async def spells_overview(limit: int = None, skip: int = None):
+    if limit and not skip:
+        result = await DBSpellDetails.find_all().limit(limit).to_list()
+    else:
+        result = await DBSpellDetails.find_all().to_list()
+
+        if limit and skip:
+            result = result[skip : skip + limit]
 
     if result is None:
         raise HTTPException(status_code=404, detail="Cannot retrieve data.")
