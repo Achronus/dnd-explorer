@@ -1,7 +1,7 @@
 from contextlib import asynccontextmanager
 
-from app.config.dependencies import get_db
 from app.config.settings import settings
+from app.db import init_db
 from app.routers import spells
 
 from fastapi import FastAPI, Request
@@ -10,7 +10,7 @@ from fastapi.staticfiles import StaticFiles
 
 @asynccontextmanager
 async def lifespan(_: FastAPI):
-    _ = await get_db()
+    await init_db()
     yield
 
 
