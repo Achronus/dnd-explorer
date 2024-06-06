@@ -5,7 +5,7 @@ from app.config.constants import SPELLS_URL
 from app.config.settings import settings
 from app.models import __beanie_models__
 from app.models import DBSpellDetails
-from app.utils.retrieval import fetch_all, fetch_one
+from app.db.helper.retrieval import fetch_all, fetch_one
 
 from beanie import init_beanie
 from motor.motor_asyncio import AsyncIOMotorClient

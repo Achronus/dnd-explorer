@@ -1,15 +1,13 @@
 import os
 
-from app.utils.fileloader import FileLoader
+from dotenv import load_dotenv
+
+
+load_dotenv(".env.local")
 
 
 class Settings:
     """A storage container for storing configuration variables."""
-
-    __fileloader = FileLoader()
-
-    DIRPATHS = __fileloader.DIRPATHS
-    FILEPATHS = __fileloader.FILEPATHS
 
     DB_URL = os.getenv("DATABASE_URL")
     DB_NAME = os.getenv("DB_NAME")
