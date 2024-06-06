@@ -16,5 +16,12 @@ class Settings:
     HOST = os.getenv("HOST")
     PORT = int(os.getenv("PORT"))
 
+    FRONTEND_ORIGIN = os.getenv("FRONTEND_ORIGIN")
+
 
 settings = Settings()
+
+
+origins = [
+    settings.FRONTEND_ORIGIN,
+]

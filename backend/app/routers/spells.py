@@ -1,5 +1,5 @@
 from app.models import DBSpellDetails
-from app.models.local import SpellOverview, SpellDetails
+from app.models.local import SpellNames, SpellOverview, SpellDetails
 
 from fastapi import HTTPException, APIRouter
 
@@ -21,6 +21,17 @@ async def spells_overview(limit: int = None, skip: int = None):
         raise HTTPException(status_code=404, detail="Cannot retrieve data.")
 
     return result
+
+
+@router.get("/names", response_model=list[SpellNames] | list[str])
+async def spell_names():
+    result = await DBSpellDetails.find_all().to_list()
+
+    if result is None:
+        raise HTTPException(status_code=404, detail="Cannot retrieve data.")
+
+    names = ["-".join(name.name.lower().split(" ")) for name in result]
+    return names
 
 
 @router.get("/{index}", response_model=SpellDetails)
