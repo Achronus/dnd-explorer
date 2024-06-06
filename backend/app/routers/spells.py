@@ -1,13 +1,14 @@
+from app.config.dependencies import get_db
 from app.models import DBSpellDetails
 from app.models.local import SpellOverview, SpellDetails
 
-from fastapi import HTTPException, APIRouter
+from fastapi import Depends, HTTPException, APIRouter
 
 
 router = APIRouter(prefix="/spells", tags=["spells"])
 
 
-@router.get("/", response_model=list[SpellOverview])
+@router.get("/", response_model=list[SpellOverview], dependencies=[Depends(get_db)])
 async def spells_overview(limit: int = None, skip: int = None):
     if limit and not skip:
         result = await DBSpellDetails.find_all().limit(limit).to_list()
@@ -23,7 +24,7 @@ async def spells_overview(limit: int = None, skip: int = None):
     return result
 
 
-@router.get("/{index}", response_model=SpellDetails)
+@router.get("/{index}", response_model=SpellDetails, dependencies=[Depends(get_db)])
 async def spell_details(index: str):
     result = await DBSpellDetails.find_one(DBSpellDetails.index == index)
 

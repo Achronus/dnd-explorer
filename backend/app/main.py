@@ -1,22 +1,16 @@
 from contextlib import asynccontextmanager
 
-from app.models import __beanie_models__
+from app.config.dependencies import get_db
 from app.config.settings import settings
 from app.routers import spells
-
-from beanie import init_beanie
-from motor.motor_asyncio import AsyncIOMotorClient
 
 from fastapi import FastAPI, Request
 from fastapi.staticfiles import StaticFiles
 
 
 @asynccontextmanager
-async def lifespan(app: FastAPI):
-    client = AsyncIOMotorClient(settings.DB_URL)
-    await init_beanie(
-        database=client[settings.DB_NAME], document_models=__beanie_models__
-    )
+async def lifespan(_: FastAPI):
+    _ = await get_db()
     yield
 
 
