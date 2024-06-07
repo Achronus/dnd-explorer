@@ -1,6 +1,7 @@
 import { CardDetailsType } from "../types/cards";
 
 const ApiUrlRoot = "https://www.dnd5eapi.co/api";
+const GitHubUrl = "https://github.com/Achronus";
 
 const HomepageCategories: CardDetailsType[] = [
   {
@@ -32,4 +33,4 @@ const HomepageCategories: CardDetailsType[] = [
   },
 ];
 
-export { ApiUrlRoot, HomepageCategories };
+export { ApiUrlRoot, HomepageCategories, GitHubUrl };
