@@ -12,10 +12,11 @@ import Image from "next/image";
 import Link from "next/link";
 
 type CarouselProps = {
+  title: string;
   slides: number[];
 };
 
-const Carousel = ({ slides }: CarouselProps) => {
+const Carousel = ({ title, slides }: CarouselProps) => {
   const [emblaRef, emblaApi] = useEmblaCarousel({
     align: "start",
   });
@@ -28,7 +29,12 @@ const Carousel = ({ slides }: CarouselProps) => {
   } = usePrevNextButtons(emblaApi);
 
   return (
-    <section className={styles.embla}>
+    <section
+      className={cn(styles.embla, "bg-base-100 pt-10")}
+    >
+      <h1 className="text-white text-3xl font-semibold mx-8">
+        {title}
+      </h1>
       <div
         className={cn(styles.embla__viewport, "px-8")}
         ref={emblaRef}
@@ -36,20 +42,17 @@ const Carousel = ({ slides }: CarouselProps) => {
         <div
           className={cn(styles.embla__container, "mt-10")}
         >
-          {slides.map((slide) => (
-            <div
-              className={styles.embla__slide}
-              key={slide}
-            >
+          {slides.map((slide, idx) => (
+            <div className={styles.embla__slide} key={idx}>
               <Link href="/">
                 <div
                   className={cn(
                     styles.embla__slide__number,
-                    "border border-black"
+                    "border border-gray-800 bg-base-200 rounded-lg"
                   )}
                 >
                   <div className="px-6 w-full h-full flex flex-col justify-center">
-                    <Image />
+                    {/* <Image /> */}
                     <div className="opacity-0 hover:opacity-100 duration-300 h-4/6 flex items-center">
                       <p className="text-white text-base mb-6 font-normal">
                         Lorem ipsum dolor sit amet

@@ -1,31 +1,58 @@
-import { CardDetailsType } from "../types/cards";
+import { CategoryCardDetailsType } from "@/types/cards";
 
 const ApiUrlRoot = "https://www.dnd5eapi.co/api";
 const GitHubUrl = "https://github.com/Achronus";
 
-const HomepageCategories: CardDetailsType[] = [
+const HomepageCategories: CategoryCardDetailsType[] = [
   {
     url: "/classes",
-    title: "Classes",
-    description: "Get your classes here!",
+    title: "Class",
+    count: 30,
     img: {
       href: "",
       alt: "",
     },
   },
   {
-    url: "/spells",
-    title: "Spells",
-    description: "Get your spells here!",
+    url: "/subclasses",
+    title: "Subclass",
+    count: 10,
     img: {
       href: "",
       alt: "",
     },
   },
   {
-    url: "/monsters",
-    title: "Monsters",
-    description: "Get your monsters here!",
+    url: "/attack-type",
+    title: "Attack",
+    count: 20,
+    img: {
+      href: "",
+      alt: "",
+    },
+  },
+  {
+    url: "/levels",
+    title: "Level",
+    count: 20,
+    img: {
+      href: "",
+      alt: "",
+    },
+  },
+  {
+    url: "/schools",
+    title: "School",
+    count: 20,
+    img: {
+      href: "",
+      alt: "",
+    },
+  },
+  {
+    url: "/damage-type",
+    title: "Damage",
+    count: 20,
     img: {
       href: "",
       alt: "",

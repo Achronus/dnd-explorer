@@ -5,6 +5,13 @@ type ImageType = {
   alt: string;
 };
 
+type CategoryCardDetailsType = {
+  url: string;
+  title: string;
+  count: number;
+  img: ImageType;
+};
+
 type CardDetailsType = {
   url: string;
   title: string;
@@ -17,4 +24,9 @@ type SpellCardInfo = SpellCardApi & {
   img?: ImageType;
 };
 
-export type { CardDetailsType, ImageType, SpellCardInfo };
+export type {
+  CategoryCardDetailsType,
+  CardDetailsType,
+  ImageType,
+  SpellCardInfo,
+};

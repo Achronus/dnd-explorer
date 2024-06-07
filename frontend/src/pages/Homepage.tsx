@@ -1,19 +1,19 @@
 import Carousel from "@/components/Carousel";
-import Card from "./Card";
+import { CategoryCard } from "./Card";
 import Hero from "@/components/Hero";
 import { HomepageCategories } from "@/lib/constants";
 
 const Categories = () => {
   return (
-    <section className="grid grid-cols-3 gap-8 justify-items-center items-center mt-10">
+    <section className="grid grid-cols-3 gap-8 m-10">
       {HomepageCategories.map((category) => (
-        <Card key={category.title} {...category} />
+        <CategoryCard key={category.title} {...category} />
       ))}
     </section>
   );
 };
 
-const SLIDE_COUNT = 5;
+const SLIDE_COUNT = 8;
 const SLIDES = Array.from(Array(SLIDE_COUNT).keys());
 
 const Homepage = () => {
@@ -25,11 +25,12 @@ const Homepage = () => {
           <span className="text-magic">Magic</span> of DnD
         </h1>
         <p className="py-6">
-          Search for the spell of your choice, or scroll
-          through the list of categories below.
+          Search for the spell of your choice, or select one
+          of the categories below.
         </p>
       </Hero>
-      <Carousel slides={SLIDES} />
+      <Categories />
+      <Carousel title="Trending Now" slides={SLIDES} />
     </main>
   );
 };
