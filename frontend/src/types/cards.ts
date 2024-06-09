@@ -1,8 +1,18 @@
-type CategoryCardDetailsType = {
+type HomeCategories = {
   url: string;
   title: string;
   count: number;
   imgName: string;
+};
+
+type CategoryCardDetails = {
+  title: string;
+  count: number;
+  url: string;
+  img: {
+    name: string;
+    url: string;
+  };
 };
 
 type CardDetailsType = {
@@ -21,7 +31,8 @@ type ImgCategory = {
 };
 
 export type {
-  CategoryCardDetailsType,
+  HomeCategories,
+  CategoryCardDetails,
   CardDetailsType,
   ImgCategory,
 };

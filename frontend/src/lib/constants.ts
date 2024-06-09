@@ -1,11 +1,11 @@
-import { CategoryCardDetailsType } from "@/types/cards";
+import { HomeCategories } from "@/types/cards";
 
 const ApiUrlRoot = "https://www.dnd5eapi.co/api";
 const GitHubUrl = "https://github.com/Achronus";
 
 const UTListFileURL = "/api/uploadthing/list-files";
 
-const HomepageCategories: CategoryCardDetailsType[] = [
+const HomepageCategories: HomeCategories[] = [
   {
     url: "/classes",
     title: "Class",

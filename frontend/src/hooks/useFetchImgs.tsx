@@ -3,15 +3,18 @@ import { useEffect, useState } from "react";
 
 const useFetchImgs = (imgNames: string) => {
   const [imgUrls, setImgUrls] = useState<string[]>([]);
+  const [isLoading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
+    if (!imgNames) {
+      return;
+    }
+
     const fetchUrl = async () => {
       try {
         const response = await fetch(
-          `${UTListFileURL}?filenames=${encodeURIComponent(
-            imgNames
-          )}`
+          `${UTListFileURL}?filenames=${imgNames}`
         );
 
         if (response.ok) {
@@ -26,17 +29,19 @@ const useFetchImgs = (imgNames: string) => {
 
           setImgUrls(imgUrls);
         } else {
-          throw new Error("Failed to fetch image");
+          throw new Error("Failed to fetch images");
         }
       } catch (error: any) {
         setError(error.message);
+      } finally {
+        setLoading(false);
       }
     };
 
     fetchUrl();
   }, [imgNames]);
 
-  return { imgUrls, error };
+  return { imgUrls, isLoading, error };
 };
 
 export default useFetchImgs;
