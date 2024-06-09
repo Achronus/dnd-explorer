@@ -1,32 +1,27 @@
-import { SpellCardApi } from "./api";
-
-type ImageType = {
-  href: string;
-  alt: string;
-};
-
 type CategoryCardDetailsType = {
   url: string;
   title: string;
   count: number;
-  img: ImageType;
+  imgName: string;
 };
 
 type CardDetailsType = {
   url: string;
   title: string;
   description: string;
-  img: ImageType;
+  img: {
+    name: string;
+    url: string;
+  };
 };
 
-type SpellCardInfo = SpellCardApi & {
-  desc: string[];
-  img?: ImageType;
+type ImgCategory = {
+  name: string;
+  url: string;
 };
 
 export type {
   CategoryCardDetailsType,
   CardDetailsType,
-  ImageType,
-  SpellCardInfo,
+  ImgCategory,
 };
