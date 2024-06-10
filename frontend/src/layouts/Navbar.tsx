@@ -1,6 +1,6 @@
 "use client";
 
-import { HomepageCategories } from "@/lib/constants";
+import { HomepageCategories } from "@/data/HomepageCategories";
 import Image from "next/image";
 import Link from "next/link";
 

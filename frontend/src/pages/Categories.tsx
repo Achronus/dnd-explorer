@@ -1,6 +1,6 @@
 "use client";
 
-import { HomepageCategories } from "@/lib/constants";
+import { HomepageCategories } from "@/data/HomepageCategories";
 import CategoryCard from "./Card";
 import useFetchImgs from "@/hooks/useFetchImgs";
 import { useEffect, useState } from "react";
@@ -21,9 +21,7 @@ const CategoryCards = () => {
     getNames();
   }, []);
 
-  const { imgUrls, isLoading, error } = useFetchImgs(
-    names.join(",")
-  );
+  const { imgUrls, isLoading, error } = useFetchImgs(names.join(","));
   return (
     <>
       {isLoading ? (
