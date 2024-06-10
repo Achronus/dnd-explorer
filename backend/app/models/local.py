@@ -1,6 +1,8 @@
 from typing import Optional
+
+from app.enums import Classes, Components, DamageTypes, Levels, MagicSchools, Subclasses
 from app.models import CoreDetails, DCType, DamageType
-from pydantic import BaseModel, field_validator
+from pydantic import BaseModel, ConfigDict, field_validator
 
 
 class SpellNames(BaseModel):
@@ -9,8 +11,23 @@ class SpellNames(BaseModel):
     name: str
 
 
+class SpellOverviewInput(BaseModel):
+    """A model that represents the query parameters for the `spells_overview` route."""
+
+    limit: Optional[int] = None
+    skip: Optional[int] = None
+    classes: Optional[Classes] = None
+    subclasses: Optional[Subclasses] = None
+    components: Optional[Components] = None
+    level: Optional[Levels] = None
+    school: Optional[MagicSchools] = None
+    damage_type: Optional[DamageTypes] = None
+
+    model_config = ConfigDict(use_enum_values=True)
+
+
 class SpellOverview(BaseModel):
-    """A model for a spells overview details."""
+    """A model for the spell overview details."""
 
     name: str
     desc: list[str] | str
@@ -31,8 +48,15 @@ class SpellOverview(BaseModel):
         return ""
 
 
-class SpellDetails(BaseModel):
-    """A model for a spells complete details."""
+class SpellOverviewResponse(BaseModel):
+    """A model for the `spells_overview` route reponse."""
+
+    count: int
+    items: list[SpellOverview]
+
+
+class SpellDetailsResponse(BaseModel):
+    """A model that represents the spell details for each spell."""
 
     name: str
     desc: list[str]

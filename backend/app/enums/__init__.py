@@ -2,6 +2,8 @@ from enum import IntEnum, StrEnum
 
 
 class Classes(StrEnum):
+    """An enum for spell classes."""
+
     BARBARIAN = "barbarian"
     BARD = "bard"
     CLERIC = "cleric"
@@ -17,6 +19,8 @@ class Classes(StrEnum):
 
 
 class Subclasses(StrEnum):
+    """An enum for spell subclasses."""
+
     BERSERKER = "berserker"
     CHAMPION = "champion"
     DEVOTION = "devotion"
@@ -32,12 +36,20 @@ class Subclasses(StrEnum):
 
 
 class Components(StrEnum):
-    VERBAL = "V"
-    SOMANTIC = "S"
-    MATERIAL = "M"
+    """An enum for spell components."""
+
+    VERBAL = "v"
+    SOMANTIC = "s"
+    MATERIAL = "m"
+    VERBAL_SOMANTIC = "v,s"
+    VERBAL_MATERIAL = "v,m"
+    MATERIAL_SOMANTIC = "m,s"
+    ALL = "v,s,m"
 
 
 class Levels(IntEnum):
+    """An enum for spell levels."""
+
     CANTRIP = 0
     ONE = 1
     TWO = 2
@@ -51,6 +63,8 @@ class Levels(IntEnum):
 
 
 class MagicSchools(StrEnum):
+    """An enum for spell magic schools."""
+
     ABJURATION = "abjuration"
     CONJURATION = "conjuration"
     DIVINATION = "divination"
@@ -62,6 +76,8 @@ class MagicSchools(StrEnum):
 
 
 class DamageTypes(StrEnum):
+    """An enum for spell damage types."""
+
     ACID = "acid"
     BLUDGEONING = "bludgeoning"
     COLD = "cold"
