@@ -14,10 +14,14 @@ class SpellOverview(BaseModel):
 
     name: str
     desc: list[str] | str
-    level: int
-    school: CoreDetails
-    range: str
     url: str
+    range: str
+    level: int
+    components: list[str]
+    school: CoreDetails
+    damage: Optional[DamageType] = None
+    classes: list[CoreDetails]
+    subclasses: list[CoreDetails]
 
     @field_validator("desc")
     def validate_desc(cls, desc: list[str]) -> str:
