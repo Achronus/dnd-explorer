@@ -25,9 +25,9 @@ const CategoryCards = () => {
   return (
     <>
       {isLoading ? (
-        <div className="flex m-20 items-center justify-center animate-spin">
-          <Loader width={50} height={50} />
-        </div>
+        <section className="grid gap-8 m-20 items-center justify-center">
+          <Loader width={50} height={50} className="animate-spin" />
+        </section>
       ) : (
         <section className="grid grid-cols-3 gap-8 m-10">
           {HomepageCategories.map((category, idx) => (
