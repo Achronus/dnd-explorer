@@ -1,3 +1,4 @@
+from app.enums import CATEGORY_MAPPING
 from app.models import DBSpellDetails
 from app.models.local import SpellNames, SpellOverview, SpellDetails
 
@@ -21,6 +22,11 @@ async def spells_overview(limit: int = None, skip: int = None):
         raise HTTPException(status_code=404, detail="Cannot retrieve data.")
 
     return result
+
+
+@router.get("/counts", response_model=dict[str, int])
+async def category_counts():
+    return CATEGORY_MAPPING
 
 
 @router.get("/names", response_model=list[SpellNames] | list[str])

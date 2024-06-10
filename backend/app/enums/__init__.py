@@ -1,7 +1,7 @@
-from enum import Enum
+from enum import IntEnum, StrEnum
 
 
-class Classes(Enum, str):
+class Classes(StrEnum):
     BARBARIAN = "barbarian"
     BARD = "bard"
     CLERIC = "cleric"
@@ -16,7 +16,7 @@ class Classes(Enum, str):
     WIZARD = "wizard"
 
 
-class Subclasses(Enum, str):
+class Subclasses(StrEnum):
     BERSERKER = "berserker"
     CHAMPION = "champion"
     DEVOTION = "devotion"
@@ -31,13 +31,13 @@ class Subclasses(Enum, str):
     THIEF = "thief"
 
 
-class Components(Enum, str):
+class Components(StrEnum):
     VERBAL = "V"
     SOMANTIC = "S"
     MATERIAL = "M"
 
 
-class Levels(Enum, int):
+class Levels(IntEnum):
     CANTRIP = 0
     ONE = 1
     TWO = 2
@@ -50,7 +50,7 @@ class Levels(Enum, int):
     NINE = 9
 
 
-class MagicSchools(Enum, str):
+class MagicSchools(StrEnum):
     ABJURATION = "abjuration"
     CONJURATION = "conjuration"
     DIVINATION = "divination"
@@ -61,7 +61,7 @@ class MagicSchools(Enum, str):
     TRANSMUTATION = "transmutation"
 
 
-class DamageTypes(Enum, str):
+class DamageTypes(StrEnum):
     ACID = "acid"
     BLUDGEONING = "bludgeoning"
     COLD = "cold"
@@ -75,3 +75,13 @@ class DamageTypes(Enum, str):
     RADIANT = "radiant"
     SLASHING = "slashing"
     THUNDER = "thunder"
+
+
+CATEGORY_MAPPING = {
+    "classes": len(Classes),
+    "subclasses": len(Subclasses),
+    "components": len(Components),
+    "levels": len(Levels),
+    "magic-schools": len(MagicSchools),
+    "damage-types": len(DamageTypes),
+}
