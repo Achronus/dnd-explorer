@@ -1,29 +1,17 @@
 "use client";
 
+import { HomepageCategories } from "@/lib/constants";
 import Image from "next/image";
 import Link from "next/link";
 
 const MenuItems = () => {
   return (
     <>
-      <li>
-        <Link href="/classes">Class</Link>
-      </li>
-      <li>
-        <Link href="/subclasses">Subclass</Link>
-      </li>
-      <li>
-        <Link href="/levels">Level</Link>
-      </li>
-      <li>
-        <Link href="/schools">School</Link>
-      </li>
-      <li>
-        <Link href="/attack-types">Attack Type</Link>
-      </li>
-      <li>
-        <Link href="/damage-types">Damage Type</Link>
-      </li>
+      {HomepageCategories.map((cat) => (
+        <li key={cat.title}>
+          <Link href={cat.url}>{cat.title}</Link>
+        </li>
+      ))}
     </>
   );
 };
@@ -31,11 +19,7 @@ const MenuItems = () => {
 const SearchBox = () => {
   return (
     <label className="input input-bordered flex items-center gap-2">
-      <input
-        type="text"
-        className="grow"
-        placeholder="Search"
-      />
+      <input type="text" className="grow" placeholder="Search" />
       <svg
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 16 16"
@@ -57,11 +41,7 @@ const Navbar = () => {
     <div className="navbar bg-base-200 p-5 z-10">
       <div className="navbar-start">
         <div className="dropdown">
-          <div
-            tabIndex={0}
-            role="button"
-            className="btn btn-ghost lg:hidden"
-          >
+          <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               className="h-5 w-5"
@@ -85,12 +65,7 @@ const Navbar = () => {
           </ul>
         </div>
         <Link href="/" className="btn btn-ghost text-xl">
-          <Image
-            src="/logo-sm.png"
-            alt="Logo"
-            width={42}
-            height={42}
-          />
+          <Image src="/logo-sm.png" alt="Logo" width={42} height={42} />
           DnD Spell Explorer
         </Link>
       </div>

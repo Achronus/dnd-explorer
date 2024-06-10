@@ -19,8 +19,8 @@ const HomepageCategories: HomeCategories[] = [
     imgName: "subclass-cat",
   },
   {
-    url: "/attack-type",
-    title: "Attack",
+    url: "/components",
+    title: "Component",
     count: 20,
     imgName: "attack-cat",
   },
@@ -44,9 +44,4 @@ const HomepageCategories: HomeCategories[] = [
   },
 ];
 
-export {
-  ApiUrlRoot,
-  HomepageCategories,
-  GitHubUrl,
-  UTListFileURL,
-};
+export { ApiUrlRoot, HomepageCategories, GitHubUrl, UTListFileURL };

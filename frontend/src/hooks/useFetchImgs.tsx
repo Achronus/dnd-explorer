@@ -13,9 +13,7 @@ const useFetchImgs = (imgNames: string) => {
 
     const fetchUrl = async () => {
       try {
-        const response = await fetch(
-          `${UTListFileURL}?filenames=${imgNames}`
-        );
+        const response = await fetch(`${UTListFileURL}?filenames=${imgNames}`);
 
         if (response.ok) {
           const urlTemplate = `https://utfs.io/a/${process.env.NEXT_PUBLIC_UPLOADTHING_APP_ID}`;
