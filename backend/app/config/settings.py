@@ -20,8 +20,3 @@ class Settings:
 
 
 settings = Settings()
-
-
-origins = [
-    settings.FRONTEND_ORIGIN,
-]
