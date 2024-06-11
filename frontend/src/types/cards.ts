@@ -1,18 +1,18 @@
+import { UTImage } from "./api";
+
 type HomeCategories = {
   url: string;
   title: string;
-  count: number;
   imgName: string;
+  count?: number | "N/A";
+  img?: UTImage;
 };
 
 type CategoryCardDetails = {
   title: string;
-  count: number;
+  count: number | "N/A";
   url: string;
-  img: {
-    name: string;
-    url: string;
-  };
+  img: UTImage;
 };
 
 type CardDetailsType = {

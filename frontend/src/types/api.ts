@@ -31,4 +31,14 @@ type SpellCardDetailsApi = CoreApi & {
   subclasses: CoreApi[];
 };
 
-export type { SpellCardApi, SpellCardDetailsApi };
+type UTImage = {
+  name: string;
+  url: string;
+};
+
+type CategoryCount = {
+  name: string;
+  value: number;
+};
+
+export type { SpellCardApi, SpellCardDetailsApi, CategoryCount, UTImage };
