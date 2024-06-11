@@ -18,6 +18,13 @@ class CategoryCounts(BaseModel):
     value: int
 
 
+class CategoryValues(BaseModel):
+    """A model for category values."""
+
+    name: str
+    items: list[str | int]
+
+
 class SpellOverviewInput(BaseModel):
     """A model that represents the query parameters for the `spells_overview` route."""
 

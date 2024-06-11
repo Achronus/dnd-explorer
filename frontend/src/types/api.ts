@@ -41,4 +41,21 @@ type CategoryCount = {
   value: number;
 };
 
-export type { SpellCardApi, SpellCardDetailsApi, CategoryCount, UTImage };
+type Category = {
+  name: string;
+  items: string[];
+};
+
+type CategoryInt = {
+  name: string;
+  items: number[];
+};
+
+export type {
+  SpellCardApi,
+  SpellCardDetailsApi,
+  CategoryCount,
+  Category,
+  CategoryInt,
+  UTImage,
+};

@@ -93,11 +93,29 @@ class DamageTypes(StrEnum):
     THUNDER = "thunder"
 
 
-CATEGORY_MAPPING = {
+class CategoryTypes(StrEnum):
+    CLASS = "class"
+    SUBCLASS = "subclass"
+    COMPONENT = "component"
+    LEVEL = "level"
+    SCHOOl = "school"
+    DAMAGE = "damage"
+
+
+CATEGORY_COUNT_MAPPING = {
     "Class": len(Classes),
     "Subclass": len(Subclasses),
     "Component": len(Components),
     "Level": len(Levels),
     "School": len(MagicSchools),
     "Damage": len(DamageTypes),
+}
+
+CATEGORY_MAPPING = {
+    "class": Classes,
+    "subclass": Subclasses,
+    "component": Components,
+    "level": Levels,
+    "school": MagicSchools,
+    "damage": DamageTypes,
 }

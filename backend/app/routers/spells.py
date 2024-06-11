@@ -1,6 +1,8 @@
 from typing import Optional
 from app.enums import (
+    CATEGORY_COUNT_MAPPING,
     CATEGORY_MAPPING,
+    CategoryTypes,
     Classes,
     Components,
     DamageTypes,
@@ -11,6 +13,7 @@ from app.enums import (
 from app.models import DBSpellDetails
 from app.models.local import (
     CategoryCounts,
+    CategoryValues,
     SpellNames,
     SpellOverviewResponse,
     SpellDetailsResponse,
@@ -89,7 +92,13 @@ async def spells_overview(
 
 @router.get("/counts", response_model=list[CategoryCounts])
 async def category_counts():
-    return [{"name": k, "value": v} for k, v in CATEGORY_MAPPING.items()]
+    return [{"name": k, "value": v} for k, v in CATEGORY_COUNT_MAPPING.items()]
+
+
+@router.get("/category/{type}", response_model=CategoryValues)
+async def category_values(type: CategoryTypes):
+    items = [e.value for e in CATEGORY_MAPPING[type]]
+    return CategoryValues(name=type, items=items)
 
 
 @router.get("/names", response_model=list[SpellNames] | list[str])

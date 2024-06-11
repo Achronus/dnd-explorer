@@ -19,20 +19,7 @@ type CardDetailsType = {
   url: string;
   title: string;
   description: string;
-  img: {
-    name: string;
-    url: string;
-  };
+  img: UTImage;
 };
 
-type ImgCategory = {
-  name: string;
-  url: string;
-};
-
-export type {
-  HomeCategories,
-  CategoryCardDetails,
-  CardDetailsType,
-  ImgCategory,
-};
+export type { HomeCategories, CategoryCardDetails, CardDetailsType };
