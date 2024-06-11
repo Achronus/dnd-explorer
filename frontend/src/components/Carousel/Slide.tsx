@@ -4,12 +4,7 @@ import styles from "./Carousel.module.css";
 import { cn } from "@/lib/utils";
 import { CardDetailsType } from "@/types/cards";
 
-const Slide = async ({
-  url,
-  title,
-  description,
-  img,
-}: CardDetailsType) => {
+const Slide = ({ url, title, description, img }: CardDetailsType) => {
   return (
     <div className={styles.embla__slide}>
       <Link href={url}>
@@ -31,9 +26,7 @@ const Slide = async ({
                 {description}
               </p>
             </div>
-            <h1 className="text-2xl text-white font-semibold">
-              {title}
-            </h1>
+            <h1 className="text-2xl text-white font-semibold">{title}</h1>
           </div>
         </div>
       </Link>

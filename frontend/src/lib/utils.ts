@@ -11,3 +11,7 @@ export function zip(...arrays: any[]) {
     arrays.map((array) => array[i])
   );
 }
+
+export function title(item: string) {
+  return item[0].toUpperCase() + item.substring(1, item.length);
+}

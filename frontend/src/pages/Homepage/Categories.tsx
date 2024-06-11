@@ -26,7 +26,7 @@ const CategoryCards = () => {
     };
 
     getNames();
-  }, [data]);
+  }, []);
 
   const mergeData = (
     coreData: { url: string; title: string; imgName: string }[],

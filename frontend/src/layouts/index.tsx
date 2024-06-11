@@ -1,4 +1,5 @@
 import Footer from "./Footer";
 import Navbar from "./Navbar";
+import SpellLayout from "./SpellLayout";
 
-export { Navbar, Footer };
+export { Navbar, Footer, SpellLayout };
