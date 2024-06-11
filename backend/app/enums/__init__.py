@@ -119,3 +119,22 @@ CATEGORY_MAPPING = {
     "school": MagicSchools,
     "damage": DamageTypes,
 }
+
+CATEGORY_KEY_MAPPING = {
+    "class": "classes.index",
+    "subclass": "subclasses.index",
+    "component": "components",
+    "level": "level",
+    "school": "school.index",
+    "damage": "damage.damage_type.index",
+}
+
+COMPONENT_NAME_MAPPING = {
+    "v": "Verbal",
+    "s": "Somantic",
+    "m": "Material",
+    "v,s": "Verbal and Somantic",
+    "v,m": "Verbal and Material",
+    "m,s": "Material and Somantic",
+    "v,s,m": "Verbal, Somantic and Material",
+}

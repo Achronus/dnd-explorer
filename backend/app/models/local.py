@@ -22,7 +22,7 @@ class CategoryValues(BaseModel):
     """A model for category values."""
 
     name: str
-    items: list[str | int]
+    items: list[CategoryCounts]
 
 
 class SpellOverviewInput(BaseModel):

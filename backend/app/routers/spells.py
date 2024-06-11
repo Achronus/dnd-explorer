@@ -1,7 +1,9 @@
 from typing import Optional
 from app.enums import (
     CATEGORY_COUNT_MAPPING,
+    CATEGORY_KEY_MAPPING,
     CATEGORY_MAPPING,
+    COMPONENT_NAME_MAPPING,
     CategoryTypes,
     Classes,
     Components,
@@ -45,7 +47,7 @@ async def spells_overview(
                 if key in ["classes", "subclasses", "school"]:
                     new_key = f"{key}.index"
                 elif key == "damage_type":
-                    new_key = f"damage.{key}"
+                    new_key = f"damage.{key}.index"
                 else:
                     new_key = key
 
@@ -90,14 +92,35 @@ async def spells_overview(
     return {"count": len(result), "items": result}
 
 
-@router.get("/counts", response_model=list[CategoryCounts])
+@router.get("/category/counts", response_model=list[CategoryCounts])
 async def category_counts():
     return [{"name": k, "value": v} for k, v in CATEGORY_COUNT_MAPPING.items()]
 
 
 @router.get("/category/{type}", response_model=CategoryValues)
 async def category_values(type: CategoryTypes):
-    items = [e.value for e in CATEGORY_MAPPING[type]]
+    def handle_names(type: str, values: list[str | int]) -> list[str]:
+        if type == CategoryTypes.COMPONENT:
+            return [COMPONENT_NAME_MAPPING[value].title() for value in values]
+        elif type == CategoryTypes.LEVEL:
+            return ["Cantrips" if name == 0 else f"Level {name}" for name in values]
+        else:
+            return [value.title() for value in values]
+
+    values = [e.value for e in CATEGORY_MAPPING[type]]
+    names = handle_names(type, values)
+
+    if type == "component":
+        values = [value.upper().split(",") for value in values]
+
+    find_key = CATEGORY_KEY_MAPPING[type]
+    counts = [await DBSpellDetails.find({find_key: item}).count() for item in values]
+
+    items = [
+        CategoryCounts(name=str(name), value=count)
+        for name, count in zip(names, counts)
+    ]
+
     return CategoryValues(name=type, items=items)
 
 

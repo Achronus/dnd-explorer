@@ -12,8 +12,9 @@ import { HomeCategories } from "@/types/cards";
 const CategoryCards = () => {
   const [names, setNames] = useState<string[]>([]);
   const { imgUrls, isLoading, error } = useFetchImgs(names.join(","));
-  const { data, dataIsLoading, dataError } =
-    useFetchData<CategoryCount[]>("/api/spells/counts");
+  const { data, dataIsLoading, dataError } = useFetchData<CategoryCount[]>(
+    "/api/spells/category/counts"
+  );
   const [categoryData, setCategoryData] = useState<HomeCategories[]>([]);
 
   useEffect(() => {
