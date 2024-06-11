@@ -94,7 +94,18 @@ async def spells_overview(
 
 @router.get("/category/counts", response_model=list[CategoryCounts])
 async def category_counts():
-    return [{"name": k, "value": v} for k, v in CATEGORY_COUNT_MAPPING.items()]
+    values = []
+    for name in CATEGORY_COUNT_MAPPING.keys():
+        result = await category_values(name.lower())
+        count = 0
+
+        for item in result.items:
+            if item.value > 0:
+                count += 1
+
+        values.append({"name": name, "value": count})
+
+    return values
 
 
 @router.get("/category/{type}", response_model=CategoryValues)
