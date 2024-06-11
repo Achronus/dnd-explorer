@@ -15,12 +15,3 @@ async def lifespan(_: FastAPI):
 app = FastAPI(docs_url="/api/docs", redoc_url=None, lifespan=lifespan)
 
 app.include_router(spells.router, prefix="/api")
-
-
-@app.get("/")
-async def home():
-    return {
-        "docs": "/api/docs",
-        "spells": "/api/spells",
-        "spell_names": "/api/spells/names",
-    }
