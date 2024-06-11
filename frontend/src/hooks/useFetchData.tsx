@@ -1,31 +1,37 @@
 import { useEffect, useState } from "react";
-import axios, { AxiosError } from "axios";
 
-type AxiosErrorType = AxiosError<any> | null;
-
-const useFetchData = (url: string) => {
-  const [data, setData] = useState<DataType>(null);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<AxiosErrorType>(null);
+const useFetchData = <T,>(url: string) => {
+  const [data, setData] = useState<T | []>([]);
+  const [dataIsLoading, setDataLoading] = useState(true);
+  const [dataError, setDataError] = useState(null);
 
   useEffect(() => {
-    const fetchData = async () => {
-      setIsLoading(true);
+    if (!url) {
+      return;
+    }
 
+    const fetchData = async () => {
       try {
-        const response = await axios.get(url);
-        setData(response.data);
-      } catch (error) {
-        setError(error as AxiosErrorType);
+        const response = await fetch(url);
+
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const result = await response.json();
+        setData(result);
+      } catch (error: any) {
+        console.error("Error fetching data:", error);
+        setDataError(error);
       } finally {
-        setIsLoading(false);
+        setDataLoading(false);
       }
     };
 
     fetchData();
   }, [url]);
 
-  return { data, isLoading, error };
+  return { data, dataIsLoading, dataError };
 };
 
 export default useFetchData;
