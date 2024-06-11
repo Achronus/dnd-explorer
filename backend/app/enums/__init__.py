@@ -94,10 +94,10 @@ class DamageTypes(StrEnum):
 
 
 CATEGORY_MAPPING = {
-    "classes": len(Classes),
-    "subclasses": len(Subclasses),
-    "components": len(Components),
-    "levels": len(Levels),
-    "magic-schools": len(MagicSchools),
-    "damage-types": len(DamageTypes),
+    "Class": len(Classes),
+    "Subclass": len(Subclasses),
+    "Component": len(Components),
+    "Level": len(Levels),
+    "School": len(MagicSchools),
+    "Damage": len(DamageTypes),
 }

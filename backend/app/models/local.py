@@ -11,6 +11,13 @@ class SpellNames(BaseModel):
     name: str
 
 
+class CategoryCounts(BaseModel):
+    """A model for category counts."""
+
+    name: str
+    value: int
+
+
 class SpellOverviewInput(BaseModel):
     """A model that represents the query parameters for the `spells_overview` route."""
 

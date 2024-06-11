@@ -10,6 +10,7 @@ from app.enums import (
 )
 from app.models import DBSpellDetails
 from app.models.local import (
+    CategoryCounts,
     SpellNames,
     SpellOverviewResponse,
     SpellDetailsResponse,
@@ -86,9 +87,9 @@ async def spells_overview(
     return {"count": len(result), "items": result}
 
 
-@router.get("/counts", response_model=dict[str, int])
+@router.get("/counts", response_model=list[CategoryCounts])
 async def category_counts():
-    return CATEGORY_MAPPING
+    return [{"name": k, "value": v} for k, v in CATEGORY_MAPPING.items()]
 
 
 @router.get("/names", response_model=list[SpellNames] | list[str])
