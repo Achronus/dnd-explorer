@@ -1,6 +1,6 @@
 "use client";
 
-import { HomepageCategories } from "@/data/HomepageCategories";
+import { HomepageCategories } from "@/data/categories";
 import CategoryCard from "./Card";
 import useFetchImgs from "@/hooks/useFetchImgs";
 import { useEffect, useState } from "react";
@@ -32,7 +32,7 @@ const CategoryCards = () => {
   const mergeData = (
     coreData: { url: string; title: string; imgName: string }[],
     imageData: UTImage[],
-    counts: { name: string; value: number }[]
+    counts: { name: string; count: number }[]
   ): HomeCategories[] => {
     return coreData.map((item) => {
       const imageItem = imageData.find((img) => img.name === item.imgName);
@@ -43,7 +43,7 @@ const CategoryCards = () => {
         img: imageItem
           ? { name: imageItem.name, url: imageItem.url }
           : { name: item.title, url: "" },
-        count: countItem ? countItem.value : "N/A",
+        count: countItem ? countItem.count : "N/A",
       };
     });
   };

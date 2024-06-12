@@ -15,7 +15,7 @@ class CategoryCounts(BaseModel):
     """A model for category counts."""
 
     name: str
-    value: int
+    count: int
 
 
 class CategoryValues(BaseModel):

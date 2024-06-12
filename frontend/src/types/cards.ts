@@ -1,25 +1,15 @@
 import { UTImage } from "./api";
 
-type HomeCategories = {
-  url: string;
-  title: string;
-  imgName: string;
-  count?: number | "N/A";
-  img?: UTImage;
-};
-
-type CategoryCardDetails = {
+export type CategoryCardDetails = {
   title: string;
   count: number | "N/A";
   url: string;
   img: UTImage;
 };
 
-type CardDetailsType = {
+export type CardDetailsType = {
   url: string;
   title: string;
   description: string;
   img: UTImage;
 };
-
-export type { HomeCategories, CategoryCardDetails, CardDetailsType };

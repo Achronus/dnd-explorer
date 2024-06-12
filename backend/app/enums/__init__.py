@@ -102,15 +102,6 @@ class CategoryTypes(StrEnum):
     DAMAGE = "damage"
 
 
-CATEGORY_COUNT_MAPPING = {
-    "Class": len(Classes),
-    "Subclass": len(Subclasses),
-    "Component": len(Components),
-    "Level": len(Levels),
-    "School": len(MagicSchools),
-    "Damage": len(DamageTypes),
-}
-
 CATEGORY_MAPPING = {
     "class": Classes,
     "subclass": Subclasses,

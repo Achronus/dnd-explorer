@@ -1,9 +1,15 @@
-const Hero = ({ children }: { children: React.ReactNode }) => {
+type Props = {
+  children: React.ReactNode;
+};
+
+const Hero = ({ children }: Props) => {
   return (
     <section>
-      <div className="hero min-h-[350px] bg-base-200">
+      <div className="hero min-h-[500px] bg-base-200">
         <div className="hero-content text-center">
-          <div className="max-w-2xl">{children}</div>
+          <div className="flex flex-col justify-center items-center">
+            {children}
+          </div>
         </div>
       </div>
     </section>

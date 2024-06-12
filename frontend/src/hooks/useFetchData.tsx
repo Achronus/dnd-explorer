@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 
 const useFetchData = <T,>(url: string) => {
   const [data, setData] = useState<T | null>(null);
-  const [dataIsLoading, setDataLoading] = useState(true);
-  const [dataError, setDataError] = useState(null);
+  const [isLoading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     if (!url) {
@@ -22,16 +22,16 @@ const useFetchData = <T,>(url: string) => {
         setData(result);
       } catch (error: any) {
         console.error("Error fetching data:", error);
-        setDataError(error);
+        setError(error);
       } finally {
-        setDataLoading(false);
+        setLoading(false);
       }
     };
 
     fetchData();
   }, [url]);
 
-  return { data, dataIsLoading, dataError };
+  return { data, isLoading, error };
 };
 
 export default useFetchData;

@@ -1,18 +1,18 @@
-type CoreApi = {
+export type CoreApi = {
   index: string;
   name: string;
   url: string;
 };
 
-type DCApi = CoreApi & {
+export type DCApi = CoreApi & {
   dc_success: string;
 };
 
-type SpellCardApi = CoreApi & {
+export type SpellCard = CoreApi & {
   level: number;
 };
 
-type SpellCardDetailsApi = CoreApi & {
+export type SpellCardDetails = CoreApi & {
   desc: string[];
   range: string;
   components: string[];
@@ -31,31 +31,7 @@ type SpellCardDetailsApi = CoreApi & {
   subclasses: CoreApi[];
 };
 
-type UTImage = {
+export type UTImage = {
   name: string;
   url: string;
-};
-
-type CategoryCount = {
-  name: string;
-  value: number;
-};
-
-type Category = {
-  name: string;
-  items: string[];
-};
-
-type CategoryInt = {
-  name: string;
-  items: number[];
-};
-
-export type {
-  SpellCardApi,
-  SpellCardDetailsApi,
-  CategoryCount,
-  Category,
-  CategoryInt,
-  UTImage,
 };

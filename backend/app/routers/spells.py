@@ -1,6 +1,5 @@
 from typing import Optional
 from app.enums import (
-    CATEGORY_COUNT_MAPPING,
     CATEGORY_KEY_MAPPING,
     CATEGORY_MAPPING,
     COMPONENT_NAME_MAPPING,
@@ -92,29 +91,13 @@ async def spells_overview(
     return {"count": len(result), "items": result}
 
 
-@router.get("/category/counts", response_model=list[CategoryCounts])
-async def category_counts():
-    values = []
-    for name in CATEGORY_COUNT_MAPPING.keys():
-        result = await category_values(name.lower())
-        count = 0
-
-        for item in result.items:
-            if item.value > 0:
-                count += 1
-
-        values.append({"name": name, "value": count})
-
-    return values
-
-
 @router.get("/category/{type}", response_model=CategoryValues)
 async def category_values(type: CategoryTypes):
     def handle_names(type: str, values: list[str | int]) -> list[str]:
         if type == CategoryTypes.COMPONENT:
             return [COMPONENT_NAME_MAPPING[value].title() for value in values]
         elif type == CategoryTypes.LEVEL:
-            return ["Cantrips" if name == 0 else f"Level {name}" for name in values]
+            return [str(name) for name in values]
         else:
             return [value.title() for value in values]
 
@@ -128,7 +111,7 @@ async def category_values(type: CategoryTypes):
     counts = [await DBSpellDetails.find({find_key: item}).count() for item in values]
 
     items = [
-        CategoryCounts(name=str(name), value=count)
+        CategoryCounts(name=str(name), count=count)
         for name, count in zip(names, counts)
     ]
 
