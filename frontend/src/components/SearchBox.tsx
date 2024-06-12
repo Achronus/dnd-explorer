@@ -1,6 +1,6 @@
 const SearchBox = () => {
   return (
-    <label className="input input-bordered flex items-center gap-2">
+    <label className="input input-bordered flex items-center gap-2 hover:green-shadow transition-shadow">
       <input type="text" className="grow" placeholder="Find a spell..." />
       <svg
         xmlns="http://www.w3.org/2000/svg"

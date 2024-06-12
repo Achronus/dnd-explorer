@@ -6,6 +6,7 @@ export type SelectOption = {
 export type Option = {
   name: string;
   count: number;
+  value: string;
 };
 
 export type Category = {

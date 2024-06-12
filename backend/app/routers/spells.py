@@ -103,6 +103,7 @@ async def category_values(type: CategoryTypes):
 
     values = [e.value for e in CATEGORY_MAPPING[type]]
     names = handle_names(type, values)
+    old_values = values
 
     if type == "component":
         values = [value.upper().split(",") for value in values]
@@ -111,8 +112,8 @@ async def category_values(type: CategoryTypes):
     counts = [await DBSpellDetails.find({find_key: item}).count() for item in values]
 
     items = [
-        CategoryCounts(name=str(name), count=count)
-        for name, count in zip(names, counts)
+        CategoryCounts(name=str(name), count=count, value=str(value))
+        for name, count, value in zip(names, counts, old_values)
     ]
 
     return CategoryValues(name=type, items=items)

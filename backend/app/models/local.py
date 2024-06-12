@@ -16,6 +16,7 @@ class CategoryCounts(BaseModel):
 
     name: str
     count: int
+    value: str
 
 
 class CategoryValues(BaseModel):

@@ -47,6 +47,14 @@ class Components(StrEnum):
     ALL = "v,s,m"
 
 
+class MainComponents(StrEnum):
+    """A enum for the main spell components."""
+
+    VERBAL = "v"
+    SOMANTIC = "s"
+    MATERIAL = "m"
+
+
 class Levels(IntEnum):
     """An enum for spell levels."""
 
@@ -105,7 +113,7 @@ class CategoryTypes(StrEnum):
 CATEGORY_MAPPING = {
     "class": Classes,
     "subclass": Subclasses,
-    "component": Components,
+    "component": MainComponents,
     "level": Levels,
     "school": MagicSchools,
     "damage": DamageTypes,
@@ -124,8 +132,4 @@ COMPONENT_NAME_MAPPING = {
     "v": "Verbal",
     "s": "Somantic",
     "m": "Material",
-    "v,s": "Verbal and Somantic",
-    "v,m": "Verbal and Material",
-    "m,s": "Material and Somantic",
-    "v,s,m": "Verbal, Somantic and Material",
 }
