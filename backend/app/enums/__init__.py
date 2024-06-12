@@ -1,6 +1,19 @@
 from enum import IntEnum, StrEnum
 
 
+class SpellQueryKeys(StrEnum):
+    """An enum for the spell query keys."""
+
+    LIMIT = "limit"
+    SKIP = "skip"
+    CLASSES = "classes"
+    SUBCLASS = "subclass"
+    COMPONENTS = "components"
+    LEVEL = "level"
+    SCHOOl = "school"
+    DAMAGE_TYPE = "damage_type"
+
+
 class Classes(StrEnum):
     """An enum for spell classes."""
 

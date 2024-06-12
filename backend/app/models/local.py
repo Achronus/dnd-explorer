@@ -32,7 +32,7 @@ class SpellOverviewInput(BaseModel):
     limit: Optional[int] = None
     skip: Optional[int] = None
     classes: Optional[Classes] = None
-    subclasses: Optional[Subclasses] = None
+    subclass: Optional[Subclasses] = None
     components: Optional[Components] = None
     level: Optional[Levels] = None
     school: Optional[MagicSchools] = None

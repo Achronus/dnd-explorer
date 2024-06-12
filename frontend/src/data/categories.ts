@@ -31,3 +31,12 @@ export const CategoryOptions: SelectOption[] = [
     url: `${urlPrefix}/damage`,
   },
 ];
+
+export const SpellQueryKeys: string[] = [
+  "classes",
+  "subclass",
+  "components",
+  "level",
+  "school",
+  "damage_type",
+];

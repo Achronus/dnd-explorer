@@ -9,6 +9,7 @@ from app.enums import (
     DamageTypes,
     Levels,
     MagicSchools,
+    SpellQueryKeys,
     Subclasses,
 )
 from app.models import DBSpellDetails
@@ -32,7 +33,7 @@ async def spells_overview(
     limit: Optional[int] = None,
     skip: Optional[int] = None,
     classes: Optional[Classes] = None,
-    subclasses: Optional[Subclasses] = None,
+    subclass: Optional[Subclasses] = None,
     components: Optional[Components] = None,
     level: Optional[Levels] = None,
     school: Optional[MagicSchools] = None,
@@ -42,15 +43,19 @@ async def spells_overview(
         find_map = {}
 
         for key, value in query.model_dump().items():
-            if value and key not in ["limit", "skip"]:
-                if key in ["classes", "subclasses", "school"]:
+            if value and key not in [SpellQueryKeys.LIMIT, SpellQueryKeys.SKIP]:
+                if key in [
+                    SpellQueryKeys.CLASSES,
+                    SpellQueryKeys.SUBCLASS,
+                    SpellQueryKeys.SCHOOl,
+                ]:
                     new_key = f"{key}.index"
-                elif key == "damage_type":
+                elif key == SpellQueryKeys.DAMAGE_TYPE:
                     new_key = f"damage.{key}.index"
                 else:
                     new_key = key
 
-                if key == "components":
+                if key == SpellQueryKeys.COMPONENTS:
                     value: list[str] = value.upper().split(",")
 
                 find_map[new_key] = value
@@ -61,7 +66,7 @@ async def spells_overview(
         limit=limit,
         skip=skip,
         classes=classes,
-        subclasses=subclasses,
+        subclass=subclass,
         components=components,
         level=level,
         school=school,
@@ -105,7 +110,7 @@ async def category_values(type: CategoryTypes):
     names = handle_names(type, values)
     old_values = values
 
-    if type == "component":
+    if type == CategoryTypes.COMPONENT:
         values = [value.upper().split(",") for value in values]
 
     find_key = CATEGORY_KEY_MAPPING[type]
