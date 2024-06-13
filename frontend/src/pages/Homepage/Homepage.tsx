@@ -2,28 +2,46 @@
 
 import {
   SpecialisationOptions,
-  CategoryOptions,
+  CharacteristicOptions,
   SpellQueryParams,
   urlSpellPrefix,
 } from "@/data/categories";
-import { QueryOption, QueryParam, SelectOption } from "@/types/option";
+import {
+  CategoryCounts,
+  QueryOption,
+  QueryParam,
+  SelectOption,
+} from "@/types/option";
+import { SpellsApiOverview } from "@/types/api";
 
 import Hero from "./Hero";
 import SearchBox from "@/components/SearchBox";
 import Select from "@/components/Select";
+
 import { useState } from "react";
 import useFetchData from "@/hooks/useFetchData";
+
 import { Loader } from "lucide-react";
-import CategoryCard from "./Card";
 
 type CategoryProps = {
   heading: string;
   options: SelectOption[];
   valueChanges: (values: QueryParam[]) => void;
+  queryParams: string;
 };
 
-const CategorySection = ({ heading, options, valueChanges }: CategoryProps) => {
+const CategorySection = ({
+  heading,
+  options,
+  valueChanges,
+  queryParams,
+}: CategoryProps) => {
   const [values, setValues] = useState(SpellQueryParams);
+  const {
+    data: countData,
+    isLoading,
+    error,
+  } = useFetchData<CategoryCounts>(`${urlSpellPrefix}counts${queryParams}`);
 
   const handleValueChanges = (childValue: QueryOption) => {
     values.map((item) => {
@@ -38,25 +56,35 @@ const CategorySection = ({ heading, options, valueChanges }: CategoryProps) => {
   return (
     <section>
       <h1 className="mb-5 font-medium text-2xl">{heading}</h1>
-      <div className="flex gap-10">
-        {options.map((item, idx) => (
-          <Select
-            key={idx}
-            heading={item.heading}
-            url={item.url}
-            onValueChange={handleValueChanges}
-          />
-        ))}
-      </div>
+      {isLoading ? (
+        <div className="flex justify-center items-center">
+          Loading categories...
+        </div>
+      ) : (
+        <div className="flex gap-10">
+          {options.map((item, idx) => {
+            const category = countData?.categories.find(
+              (cat) => item.name === cat.name
+            );
+            return (
+              <Select
+                key={idx}
+                heading={item.heading}
+                category={category}
+                onValueChange={handleValueChanges}
+              />
+            );
+          })}
+        </div>
+      )}
     </section>
   );
 };
 
 const Homepage = () => {
   const [queryParams, setQueryParams] = useState<string>("");
-  const { data, isLoading, error } = useFetchData<any[]>(
-    `${urlSpellPrefix}${queryParams}`
-  );
+  const [url, setUrl] = useState<string>(`${urlSpellPrefix}`);
+  const { data, isLoading, error } = useFetchData<SpellsApiOverview>(url);
 
   const handleValueChanges = (values: QueryParam[]) => {
     let queryStr = "?";
@@ -65,7 +93,9 @@ const Homepage = () => {
         queryStr += `${item.prefix}${item.value}&`;
       }
     });
-    setQueryParams(queryStr.slice(0, -1));
+    const newParams = queryStr.slice(0, -1);
+    setQueryParams(newParams);
+    setUrl(`${urlSpellPrefix}${newParams}`);
   };
 
   return (
@@ -82,17 +112,25 @@ const Homepage = () => {
           <SearchBox />
         </div>
         <div className="flex gap-10 mt-16 mb-6 justify-center items-center text-start">
-          <CategorySection
-            heading="Specialisation"
-            options={SpecialisationOptions}
-            valueChanges={handleValueChanges}
-          />
-          <div className="divider divider-horizontal"></div>
-          <CategorySection
-            heading="Category"
-            options={CategoryOptions}
-            valueChanges={handleValueChanges}
-          />
+          {isLoading ? (
+            <div>Loading options...</div>
+          ) : (
+            <>
+              <CategorySection
+                heading="Specialisation"
+                options={SpecialisationOptions}
+                valueChanges={handleValueChanges}
+                queryParams={queryParams}
+              />
+              <div className="divider divider-horizontal"></div>
+              <CategorySection
+                heading="Characteristics"
+                options={CharacteristicOptions}
+                valueChanges={handleValueChanges}
+                queryParams={queryParams}
+              />
+            </>
+          )}
         </div>
       </Hero>
       {error ? (
@@ -104,13 +142,18 @@ const Homepage = () => {
           <Loader width={50} height={50} className="animate-spin" />
         </section>
       ) : (
-        <section className="grid grid-cols-3 gap-8 m-10">
-          {data.items.map((card) => (
-            // <CategoryCard key={category.title} {...category} />
-            <div key={card.name}>
-              <p>{card.name}</p>
-            </div>
-          ))}
+        <section className="flex flex-col gap-8 mt-10">
+          <h1 className="text-3xl text-center">
+            Showing <span className="text-magic">{data?.count}</span> Spells...
+          </h1>
+          <div className="grid grid-cols-3 gap-8 m-10">
+            {data?.items.map((card) => (
+              // <CategoryCard key={category.title} {...category} />
+              <div key={card.name}>
+                <p>{card.name}</p>
+              </div>
+            ))}
+          </div>
         </section>
       )}
     </main>

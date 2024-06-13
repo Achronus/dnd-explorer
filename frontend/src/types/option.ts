@@ -1,6 +1,6 @@
 export type SelectOption = {
+  name: string;
   heading: string;
-  url: string;
 };
 
 export type Option = {
@@ -21,4 +21,9 @@ export type QueryOption = {
 
 export type QueryParam = QueryOption & {
   prefix: string;
+};
+
+export type CategoryCounts = {
+  query: string;
+  categories: Category[];
 };

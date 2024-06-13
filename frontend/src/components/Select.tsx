@@ -1,55 +1,66 @@
 "use client";
 
-import useFetchData from "@/hooks/useFetchData";
 import { Category, QueryOption } from "@/types/option";
 import { Undo2 } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 type SelectProps = {
   heading: string;
-  url: string;
+  category: Category | undefined;
   onValueChange: (value: QueryOption) => void;
 };
 
-const Select = ({ heading, url, onValueChange }: SelectProps) => {
-  const { data, isLoading, error } = useFetchData<Category>(url);
+const Select = ({ heading, category, onValueChange }: SelectProps) => {
   const [initialValue, setInitialValue] = useState(heading);
-  const [urlName, setUrlName] = useState(url);
+  const [disabled, setDisabled] = useState(false);
+  const [name, setName] = useState("");
   const [value, setValue] = useState(initialValue);
 
-  const handleChange = (event: any) => {
+  useEffect(() => {
+    if (category) {
+      setName(category.name);
+    }
+  }, [category]);
+
+  const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const newValue = event.target.value;
-    const newName = urlName.split("/").at(-1);
-    setValue(newValue);
-    onValueChange({ name: newName, value: newValue });
+    setValue(newValue[0].toUpperCase() + newValue.substring(1));
+    setDisabled(true);
+    onValueChange({ name: name, value: newValue });
   };
 
-  const handleReset = (event: any) => {
+  const handleReset = () => {
     setValue(initialValue);
-    const newName = urlName.split("/").at(-1);
-    onValueChange({ name: newName, value: "" });
+    setDisabled(false);
+    onValueChange({ name: name, value: "" });
   };
 
   return (
     <div>
       <select
-        className="select select-bordered font-rubik hover:green-shadow transition-shadow"
+        className="select select-bordered font-rubik hover:green-shadow transition-shadow disabled:hover:shadow-none"
         value={value}
         onChange={handleChange}
+        disabled={value !== initialValue || category?.items.length === 0}
       >
         <option value={heading} disabled>
           {heading}
         </option>
-        {isLoading ? (
+        {disabled ? (
+          <option>{value}</option>
+        ) : !category && !disabled ? (
           <option>Loading...</option>
         ) : (
-          <>
-            {data?.items.map((item, idx) => (
-              <option key={idx} disabled={item.count === 0} value={item.value}>
-                {item.name} ({item.count})
-              </option>
-            ))}
-          </>
+          category?.items.map((item, idx) => (
+            <option
+              key={idx}
+              id={item.name}
+              disabled={item.count === 0}
+              value={item.value}
+            >
+              {item.name} ({item.count})
+            </option>
+          ))
         )}
       </select>
       <div className="label justify-end" onClick={handleReset}>

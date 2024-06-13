@@ -1,35 +1,34 @@
 import { QueryParam, SelectOption } from "@/types/option";
 
 export const urlSpellPrefix = "/api/spells/";
-export const urlCategoryPrefix = `${urlSpellPrefix}category`;
 
 export const SpecialisationOptions: SelectOption[] = [
   {
+    name: "class",
     heading: "What class?",
-    url: `${urlCategoryPrefix}/class`,
   },
   {
+    name: "subclass",
     heading: "What sub-class?",
-    url: `${urlCategoryPrefix}/subclass`,
   },
   {
+    name: "school",
     heading: "What school?",
-    url: `${urlCategoryPrefix}/school`,
   },
 ];
 
-export const CategoryOptions: SelectOption[] = [
+export const CharacteristicOptions: SelectOption[] = [
   {
+    name: "level",
     heading: "What level?",
-    url: `${urlCategoryPrefix}/level`,
   },
   {
-    heading: "Any components?",
-    url: `${urlCategoryPrefix}/component`,
+    name: "component",
+    heading: "What component?",
   },
   {
+    name: "damage",
     heading: "What damage type?",
-    url: `${urlCategoryPrefix}/damage`,
   },
 ];
 
