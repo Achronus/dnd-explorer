@@ -54,30 +54,64 @@ const CategorySection = ({
   };
 
   return (
-    <section>
-      <h1 className="mb-5 font-medium text-2xl">{heading}</h1>
-      {isLoading ? (
-        <div className="flex justify-center items-center">
-          Loading categories...
-        </div>
-      ) : (
-        <div className="flex gap-10">
-          {options.map((item, idx) => {
-            const category = countData?.categories.find(
-              (cat) => item.name === cat.name
-            );
-            return (
-              <Select
-                key={idx}
-                heading={item.heading}
-                category={category}
-                onValueChange={handleValueChanges}
-              />
-            );
-          })}
-        </div>
-      )}
-    </section>
+    <>
+      {/* Mobile devices */}
+      <section className="md:hidden">
+        {isLoading ? (
+          <div className="flex justify-center items-center">
+            Loading categories...
+          </div>
+        ) : (
+          <div className="mobile-devices collapse collapse-arrow border border-base-100 bg-base-200">
+            <input type="checkbox" className="peer" />
+            <div className="collapse-title text-xl font-medium">{heading}</div>
+            <div className="collapse-content">
+              <div className="flex flex-col md:flex-row gap-10 mt-5">
+                {options.map((item, idx) => {
+                  const category = countData?.categories.find(
+                    (cat) => item.name === cat.name
+                  );
+                  return (
+                    <Select
+                      key={idx}
+                      heading={item.heading}
+                      category={category}
+                      onValueChange={handleValueChanges}
+                    />
+                  );
+                })}
+              </div>
+            </div>
+          </div>
+        )}
+      </section>
+
+      {/* Large devices */}
+      <section className="hidden md:block">
+        <h1 className="mb-5 font-medium text-2xl">{heading}</h1>
+        {isLoading ? (
+          <div className="flex justify-center items-center">
+            Loading categories...
+          </div>
+        ) : (
+          <div className="flex flex-col md:flex-row gap-10">
+            {options.map((item, idx) => {
+              const category = countData?.categories.find(
+                (cat) => item.name === cat.name
+              );
+              return (
+                <Select
+                  key={idx}
+                  heading={item.heading}
+                  category={category}
+                  onValueChange={handleValueChanges}
+                />
+              );
+            })}
+          </div>
+        )}
+      </section>
+    </>
   );
 };
 
@@ -99,19 +133,19 @@ const Homepage = () => {
   };
 
   return (
-    <main className="">
+    <main>
       <Hero>
-        <h1 className="text-5xl font-bold">
+        <h1 className="text-5xl font-bold py-6 lg:py-0">
           Explore the <span className="text-magic">Magic</span> of DnD
         </h1>
-        <p className="pt-6 pb-8 text-lg">
+        <p className="pb-8 text-lg my-6 lg:my-0 lg:pt-6">
           Use the search box to find specific spells, or choose a combination of
           options from the categories below!
         </p>
         <div className="flex flex-col justify-center items-center">
           <SearchBox />
         </div>
-        <div className="flex gap-10 mt-16 mb-6 justify-center items-center text-start">
+        <div className="flex flex-col lg:flex-row gap-10 mt-16 mb-6 justify-center items-center text-start">
           {isLoading ? (
             <div>Loading options...</div>
           ) : (

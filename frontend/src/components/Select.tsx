@@ -36,7 +36,7 @@ const Select = ({ heading, category, onValueChange }: SelectProps) => {
   };
 
   return (
-    <div>
+    <div className="flex flex-col min-w-[250px] md:min-w-[180px]">
       <select
         className="select select-bordered font-rubik hover:green-shadow transition-shadow disabled:hover:shadow-none"
         value={value}
