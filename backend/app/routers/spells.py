@@ -3,6 +3,7 @@ from app.enums import (
     CATEGORY_KEY_MAPPING,
     CATEGORY_MAPPING,
     COMPONENT_NAME_MAPPING,
+    QUERY_CAT_MAPPING,
     CategoryTypes,
     Classes,
     Components,
@@ -15,6 +16,7 @@ from app.enums import (
 from app.models import DBSpellDetails
 from app.models.local import (
     CategoryCounts,
+    CategoryCountsResponse,
     CategoryValues,
     SpellNames,
     SpellOverviewResponse,
@@ -22,7 +24,7 @@ from app.models.local import (
     SpellOverviewInput,
 )
 
-from fastapi import HTTPException, APIRouter
+from fastapi import HTTPException, APIRouter, Request
 
 
 router = APIRouter(prefix="/spells", tags=["spells"])
@@ -47,12 +49,10 @@ async def spells_overview(
                 SpellQueryKeys.LIMIT,
                 SpellQueryKeys.SKIP,
             ]:
-                if key in [
-                    SpellQueryKeys.CLASSES,
-                    SpellQueryKeys.SUBCLASS,
-                    SpellQueryKeys.SCHOOl,
-                ]:
+                if key in [SpellQueryKeys.CLASSES, SpellQueryKeys.SCHOOl]:
                     new_key = f"{key}.index"
+                elif key == SpellQueryKeys.SUBCLASS:
+                    new_key = f"{key}es.index"
                 elif key == SpellQueryKeys.DAMAGE_TYPE:
                     new_key = f"damage.{key}.index"
                 else:
@@ -91,12 +91,65 @@ async def spells_overview(
             result = await DBSpellDetails.find_all().to_list()
 
     if not result:
-        raise HTTPException(status_code=404, detail="No items found.")
+        return {"count": 0, "items": []}
 
     if query.limit and query.skip:
         result = result[query.skip : query.skip + query.limit]
 
     return {"count": len(result), "items": result}
+
+
+@router.get("/counts", response_model=CategoryCountsResponse)
+async def category_counts(
+    request: Request,
+    classes: Optional[Classes] = None,
+    subclass: Optional[Subclasses] = None,
+    components: Optional[Components] = None,
+    level: Optional[Levels] = None,
+    school: Optional[MagicSchools] = None,
+    damage_type: Optional[DamageTypes] = None,
+):
+    def handle_names(type: str, values: list[str | int]) -> list[str]:
+        if type == CategoryTypes.COMPONENT:
+            return [COMPONENT_NAME_MAPPING[value].title() for value in values]
+        elif type == CategoryTypes.LEVEL:
+            return [str(name) for name in values]
+        else:
+            return [value.title() for value in values]
+
+    query_dict = {
+        "classes": classes,
+        "subclass": subclass,
+        "components": components,
+        "level": level,
+        "school": school,
+        "damage_type": damage_type,
+    }
+
+    missing_keys = [key for key, value in query_dict.items() if value is None]
+
+    categories = []
+    for i in missing_keys:
+        key = QUERY_CAT_MAPPING[i]
+        values = [e.value for e in CATEGORY_MAPPING[key]]
+        names = handle_names(key, values)
+
+        counts = []
+        for item in values:
+            search_dict = query_dict.copy()
+            search_dict[i] = item
+            response = await spells_overview(**search_dict)
+            counts.append(response["count"])
+
+        items = [
+            CategoryCounts(name=str(name), count=count, value=str(value))
+            for name, count, value in zip(names, counts, values)
+            if count != 0
+        ]
+        categories.append(CategoryValues(name=key, items=items))
+
+    query = str(request.query_params)
+    return {"query": query, "categories": categories}
 
 
 @router.get("/category/{type}", response_model=CategoryValues)

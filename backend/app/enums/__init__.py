@@ -123,6 +123,15 @@ class CategoryTypes(StrEnum):
     DAMAGE = "damage"
 
 
+QUERY_CAT_MAPPING = {
+    "classes": "class",
+    "subclass": "subclass",
+    "components": "component",
+    "level": "level",
+    "school": "school",
+    "damage_type": "damage",
+}
+
 CATEGORY_MAPPING = {
     "class": Classes,
     "subclass": Subclasses,

@@ -26,6 +26,13 @@ class CategoryValues(BaseModel):
     items: list[CategoryCounts]
 
 
+class CategoryCountsResponse(BaseModel):
+    """A response model for the `category_counts` route."""
+
+    query: str
+    categories: list[CategoryValues]
+
+
 class SpellOverviewInput(BaseModel):
     """A model that represents the query parameters for the `spells_overview` route."""
 
