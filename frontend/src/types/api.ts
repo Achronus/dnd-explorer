@@ -1,18 +1,23 @@
-export type CoreApi = {
+export type CoreDetails = {
   index: string;
   name: string;
   url: string;
 };
 
-export type DCApi = CoreApi & {
+export type Damage = {
+  damage_type: CoreDetails;
+  damage_at_character_level: [number, string][];
+};
+
+export type DifficultyClass = CoreDetails & {
   dc_success: string;
 };
 
-export type SpellCard = CoreApi & {
+export type SpellCard = CoreDetails & {
   level: number;
 };
 
-export type SpellCardDetails = CoreApi & {
+export type SpellCardDetails = CoreDetails & {
   desc: string[];
   range: string;
   components: string[];
@@ -21,14 +26,21 @@ export type SpellCardDetails = CoreApi & {
   concentration: boolean;
   casting_time: string;
   level: number;
-  damage: {
-    damage_type: CoreApi;
-    damage_at_character_level: [number, string][];
-  };
-  dc: DCApi;
-  school: CoreApi;
-  classes: CoreApi[];
-  subclasses: CoreApi[];
+  damage: Damage;
+  dc: DifficultyClass;
+  school: CoreDetails;
+  classes: CoreDetails[];
+  subclasses: CoreDetails[];
+};
+
+export type SpellOverviewDetails = {
+  name: string;
+  desc: string[];
+};
+
+export type SpellsApiOverview = {
+  count: number;
+  items: SpellOverviewDetails[];
 };
 
 export type UTImage = {
