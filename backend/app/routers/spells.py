@@ -43,7 +43,10 @@ async def spells_overview(
         find_map = {}
 
         for key, value in query.model_dump().items():
-            if value and key not in [SpellQueryKeys.LIMIT, SpellQueryKeys.SKIP]:
+            if value is not None and key not in [
+                SpellQueryKeys.LIMIT,
+                SpellQueryKeys.SKIP,
+            ]:
                 if key in [
                     SpellQueryKeys.CLASSES,
                     SpellQueryKeys.SUBCLASS,
