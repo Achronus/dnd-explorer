@@ -1,19 +1,26 @@
 "use client";
 
 import useFetchData from "@/hooks/useFetchData";
-import { Category } from "@/types/option";
+import { Category, QueryOption } from "@/types/option";
 import { useState } from "react";
 
 type SelectProps = {
   heading: string;
   url: string;
+  onValueChange: (value: QueryOption) => void;
 };
 
-const Select = ({ heading, url }: SelectProps) => {
+const Select = ({ heading, url, onValueChange }: SelectProps) => {
   const { data, isLoading, error } = useFetchData<Category>(url);
+  const [urlName, setUrlName] = useState(url);
   const [value, setValue] = useState("");
 
-  console.log(value);
+  const handleChange = (event: any) => {
+    const newValue = event.target.value;
+    const newName = urlName.split("/").at(-1);
+    setValue(newValue);
+    onValueChange({ name: newName, value: newValue });
+  };
 
   return (
     <div className="hover:green-shadow transition-shadow rounded-lg">
@@ -25,18 +32,18 @@ const Select = ({ heading, url }: SelectProps) => {
         {isLoading ? (
           <option>Loading...</option>
         ) : (
-          data?.items.map((item, idx) => (
-            <option
-              key={idx}
-              disabled={item.count === 0}
-              value={item.value}
-              onClick={() => {
-                setValue(item.value);
-              }}
-            >
-              {item.name} ({item.count})
-            </option>
-          ))
+          <>
+            {data?.items.map((item, idx) => (
+              <option
+                key={idx}
+                disabled={item.count === 0}
+                value={item.value}
+                onClick={handleChange}
+              >
+                {item.name} ({item.count})
+              </option>
+            ))}
+          </>
         )}
       </select>
     </div>

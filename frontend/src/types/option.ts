@@ -13,3 +13,12 @@ export type Category = {
   name: string;
   items: Option[];
 };
+
+export type QueryOption = {
+  name?: string;
+  value: string;
+};
+
+export type QueryParam = QueryOption & {
+  prefix: string;
+};
