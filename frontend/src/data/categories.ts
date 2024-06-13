@@ -1,42 +1,67 @@
-import { SelectOption } from "@/types/option";
+import { QueryParam, SelectOption } from "@/types/option";
 
-export const urlPrefix = "/api/spells/category";
+export const urlSpellPrefix = "/api/spells/";
+export const urlCategoryPrefix = `${urlSpellPrefix}category`;
 
 export const SpecialisationOptions: SelectOption[] = [
   {
     heading: "What class?",
-    url: `${urlPrefix}/class`,
+    url: `${urlCategoryPrefix}/class`,
   },
   {
     heading: "What sub-class?",
-    url: `${urlPrefix}/subclass`,
+    url: `${urlCategoryPrefix}/subclass`,
   },
   {
     heading: "What school?",
-    url: `${urlPrefix}/school`,
+    url: `${urlCategoryPrefix}/school`,
   },
 ];
 
 export const CategoryOptions: SelectOption[] = [
   {
     heading: "What level?",
-    url: `${urlPrefix}/level`,
+    url: `${urlCategoryPrefix}/level`,
   },
   {
     heading: "Any components?",
-    url: `${urlPrefix}/component`,
+    url: `${urlCategoryPrefix}/component`,
   },
   {
     heading: "What damage type?",
-    url: `${urlPrefix}/damage`,
+    url: `${urlCategoryPrefix}/damage`,
   },
 ];
 
-export const SpellQueryKeys: string[] = [
-  "classes",
-  "subclass",
-  "components",
-  "level",
-  "school",
-  "damage_type",
+export const SpellQueryParams: QueryParam[] = [
+  {
+    name: "class",
+    value: "",
+    prefix: "classes=",
+  },
+  {
+    name: "subclass",
+    value: "",
+    prefix: "subclass=",
+  },
+  {
+    name: "component",
+    value: "",
+    prefix: "components=",
+  },
+  {
+    name: "level",
+    value: "",
+    prefix: "level=",
+  },
+  {
+    name: "school",
+    value: "",
+    prefix: "school=",
+  },
+  {
+    name: "damage",
+    value: "",
+    prefix: "damage_type=",
+  },
 ];
