@@ -1,28 +1,41 @@
 "use client";
 
+import useUpdateQueryString from "@/hooks/useUpdateQueryString";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 
 type Props = {
-  currentPage: number;
   numPages: number;
-  pageCount: number;
-  handleChange: (pageIdx: number) => void;
+  maxPagesToShow?: number;
+  itemsPerPage?: number;
 };
 
 const Pagination = ({
-  currentPage,
   numPages,
-  pageCount,
-  handleChange,
+  maxPagesToShow = 4,
+  itemsPerPage = 20,
 }: Props) => {
   const router = useRouter();
-  const maxPagesToShow = 4;
+  const searchParams = useSearchParams();
+  const currentPage = Number(searchParams?.get("page") ?? "1");
+  const perPage = searchParams?.get("per_page") ?? itemsPerPage.toString();
+
+  const updateQueryString = useUpdateQueryString();
 
   const handlePageChange = (pageIdx: number) => {
     if (pageIdx < 1 || pageIdx > numPages) return;
-    handleChange(pageIdx);
-    router.push(`/?page=${pageIdx}&per_page=${pageCount}`, { scroll: false });
+
+    const query = updateQueryString([
+      {
+        name: "page",
+        value: pageIdx.toString(),
+      },
+      {
+        name: "per_page",
+        value: perPage,
+      },
+    ]);
+    router.push(`/${query}`, { scroll: false });
   };
 
   const getPageNumbers = () => {
@@ -74,6 +87,7 @@ const Pagination = ({
           checked={currentPage == item}
           disabled={item === "..."}
           onClick={() => handlePageChange(Number(item))}
+          readOnly
         />
       ))}
 

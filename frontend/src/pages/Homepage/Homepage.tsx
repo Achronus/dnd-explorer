@@ -23,6 +23,7 @@ import useFetchData from "@/hooks/useFetchData";
 
 import Pagination from "@/components/Pagination";
 import { useRouter, useSearchParams } from "next/navigation";
+import useUpdateQueryString from "@/hooks/useUpdateQueryString";
 
 type CategoryProps = {
   heading: string;
@@ -114,12 +115,14 @@ const CategorySection = ({
 const Homepage = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const page = searchParams?.get("page") ?? "1";
-  const perPage = searchParams?.get("per_page") ?? "20";
+  const page = Number(searchParams?.get("page") ?? "1");
+  const perPage = Number(searchParams?.get("per_page") ?? "20");
+  const updateQueryString = useUpdateQueryString();
 
-  const [queryParams, setQueryParams] = useState<string>("");
+  const [queryParams, setQueryParams] = useState<string>(
+    `?page=${page}&per_page=${perPage}`
+  );
   const [numPages, setNumPages] = useState<number>(1);
-  const [currentPage, setCurrentPage] = useState(Number(page));
   const [entrires, setEntries] = useState<SpellOverviewDetails[]>([]);
 
   const [url, setUrl] = useState<string>(`${urlSpellPrefix}`);
@@ -127,20 +130,23 @@ const Homepage = () => {
 
   useEffect(() => {
     if (data) {
-      const numPages = Math.ceil(data.count / Number(perPage));
+      const numPages = Math.ceil(data.count / perPage);
       setNumPages(numPages);
 
-      const start = (Number(page) - 1) * Number(perPage);
-      const end = start + Number(perPage);
+      const start = (page - 1) * perPage;
+      const end = start + perPage;
 
       const entries = data.items.slice(start, end);
       setEntries(entries);
     }
-  }, [data, page]);
+  }, [data, page, perPage]);
 
   useEffect(() => {
-    setCurrentPage(1);
-    router.push(`/?page=1&per_page=${perPage}`, { scroll: false });
+    const query = updateQueryString([
+      { name: "page", value: "1" },
+      { name: "per_page", value: perPage.toString() },
+    ]);
+    router.push(`/${query}`, { scroll: false });
   }, [perPage]);
 
   const handleValueChanges = (values: QueryParam[]) => {
@@ -153,10 +159,6 @@ const Homepage = () => {
     const newParams = queryStr.slice(0, -1);
     setQueryParams(newParams);
     setUrl(`${urlSpellPrefix}${newParams}`);
-  };
-
-  const HandlePaginationChange = (pageIdx: number) => {
-    setCurrentPage(pageIdx);
   };
 
   return (
@@ -221,12 +223,7 @@ const Homepage = () => {
           </div>
           <div className="flex justify-center items-center mb-10">
             {numPages > 1 && (
-              <Pagination
-                currentPage={Number(currentPage)}
-                numPages={numPages}
-                pageCount={Number(perPage)}
-                handleChange={HandlePaginationChange}
-              />
+              <Pagination numPages={numPages} itemsPerPage={perPage} />
             )}
           </div>
         </section>
