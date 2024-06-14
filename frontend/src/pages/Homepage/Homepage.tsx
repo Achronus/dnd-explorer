@@ -12,7 +12,7 @@ import {
   QueryParam,
   CategoryDetails,
 } from "@/types/option";
-import { SpellsApiOverview } from "@/types/api";
+import { SpellOverviewDetails, SpellsApiOverview } from "@/types/api";
 
 import Hero from "./Hero";
 import SearchBox from "@/components/SearchBox";
@@ -22,6 +22,8 @@ import { useEffect, useState } from "react";
 import useFetchData from "@/hooks/useFetchData";
 
 import { Loader } from "lucide-react";
+import Pagination from "@/components/Pagination";
+import { useRouter, useSearchParams } from "next/navigation";
 
 type CategoryProps = {
   heading: string;
@@ -111,9 +113,36 @@ const CategorySection = ({
 };
 
 const Homepage = () => {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const page = searchParams?.get("page") ?? "1";
+  const perPage = searchParams?.get("per_page") ?? "20";
+
   const [queryParams, setQueryParams] = useState<string>("");
+  const [numPages, setNumPages] = useState<number>(1);
+  const [currentPage, setCurrentPage] = useState(Number(page));
+  const [entrires, setEntries] = useState<SpellOverviewDetails[]>([]);
+
   const [url, setUrl] = useState<string>(`${urlSpellPrefix}`);
   const { data, isLoading, error } = useFetchData<SpellsApiOverview>(url);
+
+  useEffect(() => {
+    if (data) {
+      const numPages = Math.ceil(data.count / Number(perPage));
+      setNumPages(numPages);
+
+      const start = (Number(page) - 1) * Number(perPage);
+      const end = start + Number(perPage);
+
+      const entries = data.items.slice(start, end);
+      setEntries(entries);
+    }
+  }, [data, page]);
+
+  useEffect(() => {
+    setCurrentPage(1);
+    router.push(`/?page=1&per_page=${perPage}`, { scroll: false });
+  }, [perPage]);
 
   const handleValueChanges = (values: QueryParam[]) => {
     let queryStr = "?";
@@ -125,6 +154,10 @@ const Homepage = () => {
     const newParams = queryStr.slice(0, -1);
     setQueryParams(newParams);
     setUrl(`${urlSpellPrefix}${newParams}`);
+  };
+
+  const HandlePaginationChange = (pageIdx: number) => {
+    setCurrentPage(pageIdx);
   };
 
   return (
@@ -167,17 +200,27 @@ const Homepage = () => {
           <Loader width={50} height={50} className="animate-spin" />
         </section>
       ) : (
-        <section className="flex flex-col gap-8 mt-10">
+        <section id="spells" className="flex flex-col gap-8 mt-10">
           <h1 className="text-3xl text-center">
-            Showing <span className="text-magic">{data?.count}</span> Spells...
+            Found <span className="text-magic">{data?.count}</span> Spells...
           </h1>
           <div className="grid grid-cols-3 gap-8 m-10">
-            {data?.items.map((card) => (
+            {entrires.map((card) => (
               // <CategoryCard key={category.title} {...category} />
               <div key={card.name}>
                 <p>{card.name}</p>
               </div>
             ))}
+          </div>
+          <div className="flex justify-center items-center mb-10">
+            {numPages > 1 && (
+              <Pagination
+                currentPage={Number(currentPage)}
+                numPages={numPages}
+                pageCount={Number(perPage)}
+                handleChange={HandlePaginationChange}
+              />
+            )}
           </div>
         </section>
       )}
