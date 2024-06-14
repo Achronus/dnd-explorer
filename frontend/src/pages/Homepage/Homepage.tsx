@@ -21,7 +21,6 @@ import Select from "@/components/Select";
 import { useEffect, useState } from "react";
 import useFetchData from "@/hooks/useFetchData";
 
-import { Loader } from "lucide-react";
 import Pagination from "@/components/Pagination";
 import { useRouter, useSearchParams } from "next/navigation";
 
@@ -196,11 +195,19 @@ const Homepage = () => {
           {error && <div>Data error: {error}</div>}
         </section>
       ) : isLoading ? (
-        <section className="grid gap-8 m-20 items-center justify-center">
-          <Loader width={50} height={50} className="animate-spin" />
+        <section className="flex flex-col gap-8 m-10 items-center justify-center">
+          <div className="skeleton h-12 w-1/2"></div>
+          <div className="grid grid-cols-3 gap-8 m-10 w-full">
+            <div className="skeleton h-60 w-full"></div>
+            <div className="skeleton h-60 w-full"></div>
+            <div className="skeleton h-60 w-full"></div>
+            <div className="skeleton h-60 w-full"></div>
+            <div className="skeleton h-60 w-full"></div>
+            <div className="skeleton h-60 w-full"></div>
+          </div>
         </section>
       ) : (
-        <section id="spells" className="flex flex-col gap-8 mt-10">
+        <section className="flex flex-col gap-8 mt-10">
           <h1 className="text-3xl text-center">
             Found <span className="text-magic">{data?.count}</span> Spells...
           </h1>
