@@ -1,4 +1,4 @@
-export type SelectOption = {
+export type CategoryDetails = {
   name: string;
   heading: string;
 };

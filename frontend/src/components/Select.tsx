@@ -49,7 +49,7 @@ const Select = ({ heading, category, onValueChange }: SelectProps) => {
         {disabled ? (
           <option>{value}</option>
         ) : !category && !disabled ? (
-          <option>Loading...</option>
+          <option>Updating...</option>
         ) : (
           category?.items.map((item, idx) => (
             <option
