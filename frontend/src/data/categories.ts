@@ -90,7 +90,7 @@ export const InitCategoryOptions: CategoryCounts = {
           value: "v",
         },
         {
-          name: "Somantic",
+          name: "Somatic",
           count: 4,
           value: "s",
         },

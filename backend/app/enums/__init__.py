@@ -52,11 +52,11 @@ class Components(StrEnum):
     """An enum for spell components."""
 
     VERBAL = "v"
-    SOMANTIC = "s"
+    SOMATIC = "s"
     MATERIAL = "m"
-    VERBAL_SOMANTIC = "v,s"
+    VERBAL_SOMATIC = "v,s"
     VERBAL_MATERIAL = "v,m"
-    MATERIAL_SOMANTIC = "m,s"
+    MATERIAL_SOMATIC = "m,s"
     ALL = "v,s,m"
 
 
@@ -64,7 +64,7 @@ class MainComponents(StrEnum):
     """A enum for the main spell components."""
 
     VERBAL = "v"
-    SOMANTIC = "s"
+    SOMATIC = "s"
     MATERIAL = "m"
 
 
@@ -152,6 +152,6 @@ CATEGORY_KEY_MAPPING = {
 
 COMPONENT_NAME_MAPPING = {
     "v": "Verbal",
-    "s": "Somantic",
+    "s": "Somatic",
     "m": "Material",
 }
