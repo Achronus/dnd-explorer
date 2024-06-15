@@ -1,9 +1,10 @@
 "use client";
 
+import { InitCategoryOptions } from "@/data/categories";
 import useUpdateQueryString from "@/hooks/useUpdateQueryString";
 import { Category } from "@/types/option";
 import { Undo2 } from "lucide-react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 
 type SelectProps = {
@@ -14,13 +15,33 @@ type SelectProps = {
 
 const Select = ({ heading, category, queryKey }: SelectProps) => {
   const router = useRouter();
+  const searchParams = useSearchParams();
 
   const [initialValue, setInitialValue] = useState(heading);
   const [disabled, setDisabled] = useState(false);
   const [queryName, setQueryName] = useState(queryKey);
-  const [value, setValue] = useState(initialValue);
+  const [value, setValue] = useState(
+    searchParams?.get(queryName) ?? initialValue
+  );
 
   const updateQueryString = useUpdateQueryString();
+
+  const setDisplayText = () => {
+    let name = queryName;
+
+    if (queryName === "components") {
+      name = queryName.slice(0, -1);
+    }
+
+    const cat = InitCategoryOptions.categories.find((cat) => cat.name === name);
+    const item = cat?.items.find((i) => i.value === value);
+
+    if (item) {
+      return item.name;
+    }
+
+    return value.at(0)?.toUpperCase() + value.slice(1);
+  };
 
   const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const newValue = event.target.value;
@@ -50,8 +71,8 @@ const Select = ({ heading, category, queryKey }: SelectProps) => {
         <option value={heading} disabled>
           {heading}
         </option>
-        {disabled ? (
-          <option>{value}</option>
+        {disabled || searchParams?.has(queryName) ? (
+          <option>{setDisplayText()}</option>
         ) : !category && !disabled ? (
           <option disabled>Updating...</option>
         ) : (
