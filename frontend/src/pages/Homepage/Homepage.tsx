@@ -1,10 +1,6 @@
 "use client";
 
-import {
-  InitCategoryOptions,
-  spellCountsUrl,
-  spellsUrl,
-} from "@/data/categories";
+import { InitCategoryOptions } from "@/data/categories";
 import { SpecialisationDetails, CharacteristicDetails } from "@/data/details";
 import { CategoryCounts, CategoryDetails } from "@/types/option";
 import { SpellOverviewDetails, SpellsApiOverview } from "@/types/api";
@@ -19,6 +15,8 @@ import useFetchData from "@/hooks/useFetchData";
 import Pagination from "@/components/Pagination";
 import { useRouter, useSearchParams } from "next/navigation";
 import useUpdateQueryString from "@/hooks/useUpdateQueryString";
+import SpellCard from "@/components/SpellCard";
+import { spellCountsUrl, spellsUrl } from "@/lib/constants";
 
 type CategoryProps = {
   heading: string;
@@ -97,7 +95,7 @@ const Homepage = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const page = Number(searchParams?.get("page") ?? "1");
-  const perPage = Number(searchParams?.get("per_page") ?? "20");
+  const perPage = Number(searchParams?.get("per_page") ?? "12");
   const updateQueryString = useUpdateQueryString();
 
   const [queryParams, setQueryParams] = useState<string>(
@@ -169,13 +167,12 @@ const Homepage = () => {
       ) : isLoading ? (
         <section className="flex flex-col gap-8 m-10 items-center justify-center">
           <div className="skeleton h-12 w-1/2"></div>
-          <div className="grid grid-cols-3 gap-8 m-10 w-full">
-            <div className="skeleton h-60 w-full"></div>
-            <div className="skeleton h-60 w-full"></div>
-            <div className="skeleton h-60 w-full"></div>
-            <div className="skeleton h-60 w-full"></div>
-            <div className="skeleton h-60 w-full"></div>
-            <div className="skeleton h-60 w-full"></div>
+          <div className="grid grid-cols-6 gap-8 m-10 w-full">
+            {Array.from(Array(perPage).keys()).map((_, idx) => (
+              <div key={idx} className="relative w-[245px] h-[400px]">
+                <div className="skeleton w-full h-full"></div>
+              </div>
+            ))}
           </div>
         </section>
       ) : (
@@ -183,12 +180,15 @@ const Homepage = () => {
           <h1 className="text-3xl text-center">
             Found <span className="text-magic">{data?.count}</span> Spells...
           </h1>
-          <div className="grid grid-cols-3 gap-8 m-10">
+          <div className="grid grid-cols-6 gap-8 m-10">
             {entrires.map((card) => (
-              // <CategoryCard key={category.title} {...category} />
-              <div key={card.name}>
-                <p>{card.name}</p>
-              </div>
+              <SpellCard
+                key={card.name}
+                title={card.name}
+                desc={card.desc}
+                img={{ name: card.name, url: card.index }}
+                url={`/spells/${card.index}`}
+              />
             ))}
           </div>
           <div className="flex justify-center items-center mb-10">

@@ -1,8 +1,5 @@
 import { CategoryCounts } from "@/types/option";
 
-export const spellsUrl = "/api/spells";
-export const spellCountsUrl = `${spellsUrl}/counts`;
-
 export const InitCategoryOptions: CategoryCounts = {
   query: "",
   categories: [

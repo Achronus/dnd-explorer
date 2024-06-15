@@ -1,6 +1,7 @@
-const ApiUrlRoot = "https://www.dnd5eapi.co/api";
-const GitHubUrl = "https://github.com/Achronus";
+export const ApiUrlRoot = "https://www.dnd5eapi.co/api";
+export const GitHubUrl = "https://github.com/Achronus";
 
-const UTListFileURL = "/api/uploadthing/list-files";
+export const spellsUrl = "/api/spells";
+export const spellCountsUrl = `${spellsUrl}/counts`;
 
-export { ApiUrlRoot, GitHubUrl, UTListFileURL };
+export const UTListFileUrl = "/api/uploadthing/list-files";

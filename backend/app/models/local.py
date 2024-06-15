@@ -52,6 +52,7 @@ class SpellOverview(BaseModel):
     """A model for the spell overview details."""
 
     name: str
+    index: str
     desc: list[str] | str
 
     @field_validator("desc")

@@ -35,7 +35,8 @@ export type SpellCardDetails = CoreDetails & {
 
 export type SpellOverviewDetails = {
   name: string;
-  desc: string[];
+  index: string;
+  desc: string;
 };
 
 export type SpellsApiOverview = {

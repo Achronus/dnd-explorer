@@ -1,4 +1,4 @@
-import { UTListFileURL } from "@/lib/constants";
+import { UTListFileUrl } from "@/lib/constants";
 import { zip } from "@/lib/utils";
 import { UTImage } from "@/types/api";
 import { useEffect, useState } from "react";
@@ -15,7 +15,7 @@ const useFetchImgs = (imgNames: string) => {
 
     const fetchUrl = async () => {
       try {
-        const response = await fetch(`${UTListFileURL}?filenames=${imgNames}`);
+        const response = await fetch(`${UTListFileUrl}?filenames=${imgNames}`);
 
         if (!response.ok) {
           throw new Error("Failed to fetch images");
