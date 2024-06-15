@@ -6,7 +6,7 @@
   perspective: 1200px;
 }
 
-.spell-card:hover .cover {
+.card-clicked {
   transform: rotateX(0deg) rotateY(-180deg);
 }
 

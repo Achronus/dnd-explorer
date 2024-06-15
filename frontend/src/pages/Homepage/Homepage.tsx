@@ -146,7 +146,7 @@ const Homepage = () => {
         <div className="flex flex-col justify-center items-center">
           <SearchBox />
         </div>
-        <div className="flex flex-col lg:flex-row gap-10 mt-16 mb-6 justify-center items-center text-start">
+        <div className="flex flex-col xl:flex-row gap-10 mt-16 mb-6 justify-center items-center text-start">
           <>
             <CategorySection
               heading="Specialisation"
@@ -167,7 +167,7 @@ const Homepage = () => {
       ) : isLoading ? (
         <section className="flex flex-col gap-8 m-10 items-center justify-center">
           <div className="skeleton h-12 w-1/2"></div>
-          <div className="grid grid-cols-6 gap-8 m-10 w-full">
+          <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-8 mx-auto my-10 md:m-10 w-full">
             {Array.from(Array(perPage).keys()).map((_, idx) => (
               <div key={idx} className="relative w-[245px] h-[400px]">
                 <div className="skeleton w-full h-full"></div>
@@ -176,11 +176,11 @@ const Homepage = () => {
           </div>
         </section>
       ) : (
-        <section className="flex flex-col gap-8 mt-10">
+        <section className="flex flex-col gap-8 mt-10 mx-auto">
           <h1 className="text-3xl text-center">
             Found <span className="text-magic">{data?.count}</span> Spells...
           </h1>
-          <div className="grid grid-cols-6 gap-8 m-10">
+          <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-8 mx-auto my-10 md:m-10 justify-center items-center">
             {entrires.map((card) => (
               <SpellCard
                 key={card.name}
