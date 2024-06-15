@@ -3,7 +3,7 @@
 import useUpdateQueryString from "@/hooks/useUpdateQueryString";
 import { Category } from "@/types/option";
 import { Undo2 } from "lucide-react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 type SelectProps = {
@@ -14,7 +14,6 @@ type SelectProps = {
 
 const Select = ({ heading, category, queryKey }: SelectProps) => {
   const router = useRouter();
-  const searchParams = useSearchParams();
 
   const [initialValue, setInitialValue] = useState(heading);
   const [disabled, setDisabled] = useState(false);
@@ -25,7 +24,7 @@ const Select = ({ heading, category, queryKey }: SelectProps) => {
 
   const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const newValue = event.target.value;
-    setValue(newValue[0].toUpperCase() + newValue.substring(1));
+    setValue(event.target.selectedOptions[0].id);
     setDisabled(true);
 
     const query = updateQueryString([{ name: queryName, value: newValue }]);
