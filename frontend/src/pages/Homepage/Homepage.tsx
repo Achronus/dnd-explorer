@@ -2,16 +2,11 @@
 
 import {
   InitCategoryOptions,
-  SpellQueryParams,
-  urlSpellPrefix,
+  spellCountsUrl,
+  spellsUrl,
 } from "@/data/categories";
 import { SpecialisationDetails, CharacteristicDetails } from "@/data/details";
-import {
-  CategoryCounts,
-  QueryOption,
-  QueryParam,
-  CategoryDetails,
-} from "@/types/option";
+import { CategoryCounts, CategoryDetails } from "@/types/option";
 import { SpellOverviewDetails, SpellsApiOverview } from "@/types/api";
 
 import Hero from "./Hero";
@@ -28,39 +23,25 @@ import useUpdateQueryString from "@/hooks/useUpdateQueryString";
 type CategoryProps = {
   heading: string;
   options: CategoryDetails[];
-  valueChanges: (values: QueryParam[]) => void;
-  queryParams: string;
 };
 
-const CategorySection = ({
-  heading,
-  options,
-  valueChanges,
-  queryParams,
-}: CategoryProps) => {
-  const [values, setValues] = useState(SpellQueryParams);
+const CategorySection = ({ heading, options }: CategoryProps) => {
+  const searchParams = useSearchParams();
+
   const [categoryData, setCategoryData] = useState(InitCategoryOptions);
   const {
     data: countData,
     isLoading,
     error,
-  } = useFetchData<CategoryCounts>(`${urlSpellPrefix}counts${queryParams}`);
-
-  const handleValueChanges = (childValue: QueryOption) => {
-    values.map((item) => {
-      if (childValue.name == item.name) {
-        item.value = childValue.value;
-      }
-      setValues(values);
-      valueChanges(values);
-    });
-  };
+  } = useFetchData<CategoryCounts>(
+    `${spellCountsUrl}?${searchParams?.toString()}`
+  );
 
   useEffect(() => {
     if (countData) {
       setCategoryData(countData);
     }
-  }, [countData]);
+  }, [countData, searchParams]);
 
   return (
     <>
@@ -80,7 +61,7 @@ const CategorySection = ({
                     key={idx}
                     heading={item.heading}
                     category={category}
-                    onValueChange={handleValueChanges}
+                    queryKey={item.queryKey}
                   />
                 );
               })}
@@ -102,7 +83,7 @@ const CategorySection = ({
                 key={idx}
                 heading={item.heading}
                 category={category}
-                onValueChange={handleValueChanges}
+                queryKey={item.queryKey}
               />
             );
           })}
@@ -120,13 +101,18 @@ const Homepage = () => {
   const updateQueryString = useUpdateQueryString();
 
   const [queryParams, setQueryParams] = useState<string>(
-    `?page=${page}&per_page=${perPage}`
+    `?${searchParams?.toString()}` ?? ""
   );
   const [numPages, setNumPages] = useState<number>(1);
   const [entrires, setEntries] = useState<SpellOverviewDetails[]>([]);
 
-  const [url, setUrl] = useState<string>(`${urlSpellPrefix}`);
+  const [url, setUrl] = useState<string>(`${spellsUrl}${queryParams}`);
   const { data, isLoading, error } = useFetchData<SpellsApiOverview>(url);
+
+  useEffect(() => {
+    const query = updateQueryString([], ["page", "per_page"]);
+    setUrl(`${spellsUrl}${query}`);
+  }, [searchParams, url]);
 
   useEffect(() => {
     if (data) {
@@ -147,19 +133,7 @@ const Homepage = () => {
       { name: "per_page", value: perPage.toString() },
     ]);
     router.push(`/${query}`, { scroll: false });
-  }, [perPage]);
-
-  const handleValueChanges = (values: QueryParam[]) => {
-    let queryStr = "?";
-    values.map((item) => {
-      if (item.value !== "") {
-        queryStr += `${item.prefix}${item.value}&`;
-      }
-    });
-    const newParams = queryStr.slice(0, -1);
-    setQueryParams(newParams);
-    setUrl(`${urlSpellPrefix}${newParams}`);
-  };
+  }, [perPage, data]);
 
   return (
     <main>
@@ -179,15 +153,11 @@ const Homepage = () => {
             <CategorySection
               heading="Specialisation"
               options={SpecialisationDetails}
-              valueChanges={handleValueChanges}
-              queryParams={queryParams}
             />
             <div className="divider divider-horizontal"></div>
             <CategorySection
               heading="Characteristics"
               options={CharacteristicDetails}
-              valueChanges={handleValueChanges}
-              queryParams={queryParams}
             />
           </>
         </div>

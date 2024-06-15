@@ -1,38 +1,45 @@
 "use client";
 
-import { Category, QueryOption } from "@/types/option";
+import useUpdateQueryString from "@/hooks/useUpdateQueryString";
+import { Category } from "@/types/option";
 import { Undo2 } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useState } from "react";
 
 type SelectProps = {
   heading: string;
   category: Category | undefined;
-  onValueChange: (value: QueryOption) => void;
+  queryKey: string;
 };
 
-const Select = ({ heading, category, onValueChange }: SelectProps) => {
+const Select = ({ heading, category, queryKey }: SelectProps) => {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+
   const [initialValue, setInitialValue] = useState(heading);
   const [disabled, setDisabled] = useState(false);
-  const [name, setName] = useState("");
+  const [queryName, setQueryName] = useState(
+    searchParams?.get(queryKey) ?? queryKey
+  );
   const [value, setValue] = useState(initialValue);
 
-  useEffect(() => {
-    if (category) {
-      setName(category.name);
-    }
-  }, [category]);
+  const updateQueryString = useUpdateQueryString();
 
   const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const newValue = event.target.value;
     setValue(newValue[0].toUpperCase() + newValue.substring(1));
     setDisabled(true);
-    onValueChange({ name: name, value: newValue });
+
+    const query = updateQueryString([{ name: queryName, value: newValue }]);
+    router.push(`/${query}`, { scroll: false });
   };
 
   const handleReset = () => {
     setValue(initialValue);
     setDisabled(false);
-    onValueChange({ name: name, value: "" });
+
+    const query = updateQueryString([], [queryName]);
+    router.push(`/${query}`, { scroll: false });
   };
 
   return (
@@ -49,7 +56,7 @@ const Select = ({ heading, category, onValueChange }: SelectProps) => {
         {disabled ? (
           <option>{value}</option>
         ) : !category && !disabled ? (
-          <option>Updating...</option>
+          <option disabled>Updating...</option>
         ) : (
           category?.items.map((item, idx) => (
             <option

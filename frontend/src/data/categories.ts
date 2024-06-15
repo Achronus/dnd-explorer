@@ -1,39 +1,7 @@
-import { CategoryCounts, QueryParam } from "@/types/option";
+import { CategoryCounts } from "@/types/option";
 
-export const urlSpellPrefix = "/api/spells/";
-
-export const SpellQueryParams: QueryParam[] = [
-  {
-    name: "class",
-    value: "",
-    prefix: "classes=",
-  },
-  {
-    name: "subclass",
-    value: "",
-    prefix: "subclass=",
-  },
-  {
-    name: "component",
-    value: "",
-    prefix: "components=",
-  },
-  {
-    name: "level",
-    value: "",
-    prefix: "level=",
-  },
-  {
-    name: "school",
-    value: "",
-    prefix: "school=",
-  },
-  {
-    name: "damage",
-    value: "",
-    prefix: "damage_type=",
-  },
-];
+export const spellsUrl = "/api/spells";
+export const spellCountsUrl = `${spellsUrl}/counts`;
 
 export const InitCategoryOptions: CategoryCounts = {
   query: "",
