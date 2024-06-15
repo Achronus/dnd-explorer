@@ -18,9 +18,7 @@ const Select = ({ heading, category, queryKey }: SelectProps) => {
 
   const [initialValue, setInitialValue] = useState(heading);
   const [disabled, setDisabled] = useState(false);
-  const [queryName, setQueryName] = useState(
-    searchParams?.get(queryKey) ?? queryKey
-  );
+  const [queryName, setQueryName] = useState(queryKey);
   const [value, setValue] = useState(initialValue);
 
   const updateQueryString = useUpdateQueryString();
