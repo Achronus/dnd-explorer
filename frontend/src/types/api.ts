@@ -44,6 +44,11 @@ export type SpellsApiOverview = {
   items: SpellOverviewDetails[];
 };
 
+export type SpellSearchResults = {
+  count: number;
+  results: SpellOverviewDetails[];
+};
+
 export type UTImage = {
   name: string;
   url: string;
