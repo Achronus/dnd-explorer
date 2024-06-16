@@ -63,6 +63,7 @@ const SpellCard = ({ title, desc, url, img }: Props) => {
               objectFit: "contain",
             }}
             loading="eager"
+            priority={true}
             onClick={handleOnClick}
           />
           <div

@@ -91,6 +91,21 @@ export const InitCategoryOptions: CategoryCounts = {
           count: 4,
           value: "s",
         },
+        {
+          name: "Verbal And Somatic",
+          count: 105,
+          value: "v,s",
+        },
+        {
+          name: "Verbal And Material",
+          count: 7,
+          value: "v,m",
+        },
+        {
+          name: "Verbal, Somatic, And Material",
+          count: 174,
+          value: "v,s,m",
+        },
       ],
     },
     {

@@ -26,7 +26,7 @@ export const CharacteristicDetails: CategoryDetails[] = [
   },
   {
     name: "component",
-    heading: "What component?",
+    heading: "What components?",
     queryKey: "components",
   },
   {

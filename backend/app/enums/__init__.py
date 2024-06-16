@@ -135,7 +135,7 @@ QUERY_CAT_MAPPING = {
 CATEGORY_MAPPING = {
     "class": Classes,
     "subclass": Subclasses,
-    "component": MainComponents,
+    "component": Components,
     "level": Levels,
     "school": MagicSchools,
     "damage": DamageTypes,
@@ -154,4 +154,8 @@ COMPONENT_NAME_MAPPING = {
     "v": "Verbal",
     "s": "Somatic",
     "m": "Material",
+    "v,s": "Verbal and Somatic",
+    "v,m": "Verbal and Material",
+    "m,s": "Material and Somatic",
+    "v,s,m": "Verbal, Somatic, and Material",
 }
