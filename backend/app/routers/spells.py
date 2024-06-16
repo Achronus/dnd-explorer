@@ -1,3 +1,4 @@
+import asyncio
 from typing import Optional
 from app.enums import (
     CATEGORY_KEY_MAPPING,
@@ -49,14 +50,7 @@ async def spells_overview(
                 SpellQueryKeys.LIMIT,
                 SpellQueryKeys.SKIP,
             ]:
-                if key in [SpellQueryKeys.CLASSES, SpellQueryKeys.SCHOOl]:
-                    new_key = f"{key}.index"
-                elif key == SpellQueryKeys.SUBCLASS:
-                    new_key = f"{key}es.index"
-                elif key == SpellQueryKeys.DAMAGE_TYPE:
-                    new_key = f"damage.{key}.index"
-                else:
-                    new_key = key
+                new_key = CATEGORY_KEY_MAPPING[key]
 
                 if key == SpellQueryKeys.COMPONENTS:
                     value: list[str] = value.upper().split(",")
@@ -134,12 +128,14 @@ async def category_counts(
         values = [e.value for e in CATEGORY_MAPPING[key]]
         names = handle_names(key, values)
 
-        counts = []
+        tasks = []
         for item in values:
             search_dict = query_dict.copy()
             search_dict[i] = item
-            response = await spells_overview(**search_dict)
-            counts.append(response["count"])
+            tasks.append(spells_overview(**search_dict))
+
+        responses = await asyncio.gather(*tasks)
+        counts = [response["count"] for response in responses]
 
         items = [
             CategoryCounts(name=str(name), count=count, value=str(value))

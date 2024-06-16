@@ -142,12 +142,12 @@ CATEGORY_MAPPING = {
 }
 
 CATEGORY_KEY_MAPPING = {
-    "class": "classes.index",
+    "classes": "classes.index",
     "subclass": "subclasses.index",
-    "component": "components",
+    "components": "components",
     "level": "level",
     "school": "school.index",
-    "damage": "damage.damage_type.index",
+    "damage_type": "damage.damage_type.index",
 }
 
 COMPONENT_NAME_MAPPING = {
