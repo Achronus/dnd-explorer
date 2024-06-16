@@ -23,6 +23,7 @@ from app.models.local import (
     SpellOverviewResponse,
     SpellDetailsResponse,
     SpellOverviewInput,
+    SpellSearchResponse,
 )
 
 from fastapi import HTTPException, APIRouter, Request
@@ -91,6 +92,25 @@ async def spells_overview(
         result = result[query.skip : query.skip + query.limit]
 
     return {"count": len(result), "items": result}
+
+
+@router.get("/search", response_model=SpellSearchResponse)
+async def spell_search(query: str, limit: Optional[int] = 5):
+    if not query:
+        raise HTTPException(status_code=400, detail="Query parameter required.")
+
+    pattern = f"^{query}"
+    find_map = {"name": {"$regex": pattern, "$options": "i"}}
+
+    if limit:
+        result = await DBSpellDetails.find(find_map).limit(limit).sort("name").to_list()
+    else:
+        result = await DBSpellDetails.find(find_map).sort("name").to_list()
+
+    if not result:
+        return {"count": 0, "results": []}
+
+    return {"count": len(result), "results": result}
 
 
 @router.get("/counts", response_model=CategoryCountsResponse)

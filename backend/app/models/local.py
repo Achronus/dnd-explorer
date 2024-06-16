@@ -70,6 +70,13 @@ class SpellOverviewResponse(BaseModel):
     items: list[SpellOverview]
 
 
+class SpellSearchResponse(BaseModel):
+    """A model for the `spell_search` route response."""
+
+    count: int
+    results: list[SpellOverview]
+
+
 class SpellDetailsResponse(BaseModel):
     """A model that represents the spell details for each spell."""
 
