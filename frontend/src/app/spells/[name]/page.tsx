@@ -26,7 +26,7 @@ const SpellDetails = ({ data }: { data: SpellCardDetails }) => {
   const dmgArray = (dmgValues: [string, string][]) => {
     let strArray: string[] = [];
     Object.entries(dmgValues).map(([level, dice]) => {
-      strArray.push(`- Lvl ${level} = ${dice}`);
+      strArray.push(`Lvl ${level} = ${dice}`);
     });
     return strArray;
   };
@@ -132,9 +132,16 @@ const SpellDetails = ({ data }: { data: SpellCardDetails }) => {
               <h2 className="flex gap-2 items-center font-medium">
                 {label} <Icon width={15} height={15} />
               </h2>
-              <div className="grid grid-cols-2">
+              <div className="grid grid-cols-2 gap-2 w-fit">
                 {Array.isArray(value) ? (
-                  value.map((para, idx) => <p key={idx}>{para}</p>)
+                  value.map((para, idx) => (
+                    <p
+                      key={idx}
+                      className="mt-2 px-4 py-2 bg-base-200 rounded-lg"
+                    >
+                      {para}
+                    </p>
+                  ))
                 ) : (
                   <p>
                     {value.toString().at(0)?.toUpperCase() +
