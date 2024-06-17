@@ -6,10 +6,11 @@ export type CoreDetails = {
 
 export type Damage = {
   damage_type: CoreDetails;
-  damage_at_character_level: [number, string][];
+  damage_at_character_level: [string, string][];
 };
 
-export type DifficultyClass = CoreDetails & {
+export type DifficultyClass = {
+  dc_type: CoreDetails;
   dc_success: string;
 };
 
@@ -19,6 +20,7 @@ export type SpellCard = CoreDetails & {
 
 export type SpellCardDetails = CoreDetails & {
   desc: string[];
+  higher_level: string[];
   range: string;
   components: string[];
   ritual: boolean;
@@ -26,8 +28,8 @@ export type SpellCardDetails = CoreDetails & {
   concentration: boolean;
   casting_time: string;
   level: number;
-  damage: Damage;
-  dc: DifficultyClass;
+  damage?: Damage;
+  dc?: DifficultyClass;
   school: CoreDetails;
   classes: CoreDetails[];
   subclasses: CoreDetails[];

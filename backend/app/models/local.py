@@ -81,6 +81,7 @@ class SpellDetailsResponse(BaseModel):
     """A model that represents the spell details for each spell."""
 
     name: str
+    index: str
     desc: list[str]
     higher_level: list[str]
     range: str
