@@ -34,7 +34,7 @@ const SpellDetails = ({ data }: { data: SpellCardDetails }) => {
   const nameArray = (data: CoreDetails[]) => {
     let strArray: string[] = [];
     data.map(({ name }) => {
-      strArray.push(`- ${name}`);
+      strArray.push(name);
     });
     return strArray;
   };
@@ -136,7 +136,10 @@ const SpellDetails = ({ data }: { data: SpellCardDetails }) => {
                 {Array.isArray(value) ? (
                   value.map((para, idx) => <p key={idx}>{para}</p>)
                 ) : (
-                  <p>{value}</p>
+                  <p>
+                    {value.toString().at(0)?.toUpperCase() +
+                      value.toString().slice(1)}
+                  </p>
                 )}
               </div>
             </div>
@@ -150,11 +153,18 @@ const SpellDetails = ({ data }: { data: SpellCardDetails }) => {
             <h2 className="flex gap-2 items-center font-medium">
               {label} <Icon width={15} height={15} />
             </h2>
-            <div className="flex gap-12">
+            <div className="flex gap-4">
               {value.length === 0 ? (
                 <p>-</p>
               ) : (
-                value.map((para, idx) => <p key={idx}>{para}</p>)
+                value.map((para, idx) => (
+                  <p
+                    key={idx}
+                    className="mt-2 px-4 py-2 bg-base-200 rounded-lg"
+                  >
+                    {para}
+                  </p>
+                ))
               )}
             </div>
           </div>
