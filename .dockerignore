@@ -1,0 +1,27 @@
+# Git
+**.git
+*.gitignore
+
+# Python
+**/__pycache__
+
+# Docker
+*Dockerfile.*
+*docker-compose.yml
+*.dockerignore
+
+# Tailwind
+**tailwindcss
+**tailwindcss.exe
+**tailwind.config.js
+
+# Environment files
+*.env.local
+
+# Project
+**/data
+
+# Dev
+**/tests
+*pytest.ini
+**/.pytest_cache

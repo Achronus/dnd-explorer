@@ -1,0 +1,25 @@
+# Run command:
+# docker-compose -f docker-compose.prod.yml up -d --build 
+
+# Exit command:
+# docker-compose down
+
+version: '1'
+
+services:
+  backend:
+    extends:
+      file: docker-compose.yml
+      service: backend
+    container_name: backend_prod
+    build:
+      args:
+        ENV_MODE: prod
+
+  frontend:
+    extends:
+      file: docker-compose.yml
+      service: frontend
+    container_name: frontend_prod
+    build:
+      target: production
