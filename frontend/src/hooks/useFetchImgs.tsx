@@ -15,20 +15,25 @@ const useFetchImgs = (imgNames: string) => {
 
     const fetchUrl = async () => {
       try {
-        const response = await fetch(`${UTListFileUrl}?filenames=${imgNames}`);
+        const response = await fetch(
+          `${UTListFileUrl}?filenames=${imgNames}`
+        );
 
         if (!response.ok) {
           throw new Error("Failed to fetch images");
         }
 
-        const urlTemplate = `https://utfs.io/a/${process.env.NEXT_PUBLIC_UPLOADTHING_APP_ID}`;
+        const urlTemplate = `https://utfs.io/a/${process.env.UT_APP_ID}`;
         let imgUrls: UTImage[] = [];
 
         const data: string[] = await response.json();
         const imgData = zip(imgNames.split(","), data);
 
         imgData.map(([name, url]) => {
-          imgUrls.push({ name: name, url: `${urlTemplate}/${url}` });
+          imgUrls.push({
+            name: name,
+            url: `${urlTemplate}/${url}`,
+          });
         });
 
         setImgUrls(imgUrls);

@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { UTApi } from "uploadthing/server";
 
 const utapi = new UTApi({
-  apiKey: process.env.UPLOADTHING_SECRET,
+  apiKey: process.env.UT_SECRET,
 });
 
 export async function GET(request: Request) {

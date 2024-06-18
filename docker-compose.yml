@@ -4,8 +4,6 @@
 # Exit command:
 # docker-compose down
 
-version: '1'
-
 services:
   backend:
     container_name: backend_dev
@@ -19,9 +17,9 @@ services:
         BUILD_VERSION: ${PYTHON_BUILD_VERSION}
         ENV_MODE: dev
     ports:
-    - "${BAK_PORTS}"
+      - "${BAK_PORTS}"
     volumes:
-    - .:/${PROJECT_NAME}
+      - .:/${PROJECT_NAME}
 
   frontend:
     container_name: frontend_dev
@@ -33,6 +31,6 @@ services:
         PORT: ${FNT_PORT}
         BUILD_VERSION: ${BUN_VERSION}
     ports:
-    - "${FNT_PORTS}"
+      - "${FNT_PORTS}"
     volumes:
-    - .:/${PROJECT_NAME}
+      - .:/${PROJECT_NAME}
