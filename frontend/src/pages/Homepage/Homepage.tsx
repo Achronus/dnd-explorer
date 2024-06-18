@@ -29,6 +29,7 @@ import {
 import useUpdateQueryString from "@/hooks/useUpdateQueryString";
 import SpellCard from "@/components/SpellCard";
 import { spellCountsUrl, spellsUrl } from "@/lib/constants";
+import BackToTopButton from "@/components/BackToTopButton";
 
 type CategoryProps = {
   heading: string;
@@ -244,6 +245,7 @@ const Homepage = () => {
           </div>
         </section>
       )}
+      <BackToTopButton />
     </main>
   );
 };
