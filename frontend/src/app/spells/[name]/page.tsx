@@ -22,7 +22,11 @@ import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import CardImage from "./CardImage";
 
-const SpellDetails = ({ data }: { data: SpellCardDetails }) => {
+const SpellDetails = ({
+  data,
+}: {
+  data: SpellCardDetails;
+}) => {
   const dmgArray = (dmgValues: [string, string][]) => {
     let strArray: string[] = [];
     Object.entries(dmgValues).map(([level, dice]) => {
@@ -64,7 +68,11 @@ const SpellDetails = ({ data }: { data: SpellCardDetails }) => {
       value: data.level === 0 ? "Cantrip" : data.level,
       Icon: FlaskRound,
     },
-    { label: "Duration", value: data.duration, Icon: Timer },
+    {
+      label: "Duration",
+      value: data.duration,
+      Icon: Timer,
+    },
     { label: "Range", value: data.range, Icon: Crosshair },
     {
       label: "Concentration",
@@ -72,16 +80,28 @@ const SpellDetails = ({ data }: { data: SpellCardDetails }) => {
       Icon: Brain,
     },
     // Row 2
-    { label: "Casting Time", value: data.casting_time, Icon: WandSparkles },
+    {
+      label: "Casting Time",
+      value: data.casting_time,
+      Icon: WandSparkles,
+    },
     {
       label: "Components",
-      value: data.components ? data.components.join(", ") : "-",
+      value: data.components
+        ? data.components.join(", ")
+        : "-",
       Icon: Puzzle,
     },
-    { label: "School", value: data.school.name, Icon: BookOpenText },
+    {
+      label: "School",
+      value: data.school.name,
+      Icon: BookOpenText,
+    },
     {
       label: "Damage Type",
-      value: data.damage ? data.damage.damage_type.name : "-",
+      value: data.damage
+        ? data.damage.damage_type.name
+        : "-",
       Icon: Skull,
     },
     // Row 3
@@ -125,7 +145,7 @@ const SpellDetails = ({ data }: { data: SpellCardDetails }) => {
 
   return (
     <section className="flex flex-col gap-12">
-      <div className="grid grid-cols-4 gap-8">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
         {details.map(({ label, value, Icon }, idx) => (
           <div key={idx} className="flex flex-col gap-8">
             <div>
@@ -137,7 +157,7 @@ const SpellDetails = ({ data }: { data: SpellCardDetails }) => {
                   value.map((para, idx) => (
                     <p
                       key={idx}
-                      className="mt-2 px-4 py-2 bg-base-200 rounded-lg"
+                      className="mt-2 px-4 py-2 bg-base-100 rounded-lg"
                     >
                       {para}
                     </p>
@@ -160,14 +180,14 @@ const SpellDetails = ({ data }: { data: SpellCardDetails }) => {
             <h2 className="flex gap-2 items-center font-medium">
               {label} <Icon width={15} height={15} />
             </h2>
-            <div className="flex gap-4">
+            <div className="grid grid-cols-2 w-fit lg:flex gap-4">
               {value.length === 0 ? (
                 <p>-</p>
               ) : (
                 value.map((para, idx) => (
                   <p
                     key={idx}
-                    className="mt-2 px-4 py-2 bg-base-200 rounded-lg"
+                    className="mt-2 px-4 py-2 bg-base-100 rounded-lg"
                   >
                     {para}
                   </p>
@@ -198,9 +218,8 @@ const Page = () => {
   const pathname = usePathname();
   const [spellName, setSpellName] = useState("");
 
-  const { data, isLoading, error } = useFetchData<SpellCardDetails>(
-    `/api/${pathname}`
-  );
+  const { data, isLoading, error } =
+    useFetchData<SpellCardDetails>(`/api/${pathname}`);
 
   useEffect(() => {
     if (!pathname) {
@@ -212,8 +231,8 @@ const Page = () => {
   }, [pathname]);
 
   return (
-    <main className="m-10">
-      <div className="grid grid-cols-12 gap-12 mb-10">
+    <main className="m-4 lg:m-10">
+      <div className="flex flex-col lg:grid lg:grid-cols-12 gap-12 mb-10">
         {isLoading ? (
           <>
             <div className="col-span-3 skeleton w-[400px] h-[650px]"></div>
@@ -223,8 +242,10 @@ const Page = () => {
           data && (
             <>
               <CardImage spellName={spellName} />
-              <div className="col-span-9 flex flex-col flex-grow gap-10">
-                <h1 className="font-medium text-4xl">{data.name}</h1>
+              <div className="lg:col-span-9 flex flex-col flex-grow gap-10 bg-base-200 p-4 rounded-lg">
+                <h1 className="font-medium text-4xl">
+                  {data.name}
+                </h1>
                 <SpellDetails data={data} />
               </div>
             </>

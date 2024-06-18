@@ -19,15 +19,16 @@ const CardImage = ({ spellName }: Props) => {
   }, [spellName]);
 
   return (
-    <div className="col-span-3 w-full">
+    <div className="flex justify-center lg:block lg:col-span-3 w-full">
       {isLoading ? (
-        <div className="skeleton w-[400px] h-[650px]"></div>
+        <div className="skeleton w-[400px] h-[650px] lg:w-[350px]"></div>
       ) : (
         <Image
           src={imgUrls[0].url}
           alt={imgUrls[0].name}
           width={400}
           height={650}
+          priority={true}
         />
       )}
     </div>
