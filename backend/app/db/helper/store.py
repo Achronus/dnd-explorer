@@ -1,11 +1,11 @@
 import asyncio
 
 import aiohttp
-from api.app.config.constants import SPELLS_URL
-from api.app.config.settings import settings
-from api.app.models import __beanie_models__
-from api.app.models import DBSpellDetails
-from api.app.db.helper.retrieval import fetch_all, fetch_one
+from app.config.constants import SPELLS_URL
+from app.config.settings import settings
+from app.models import __beanie_models__
+from app.models import DBSpellDetails
+from app.db.helper.retrieval import fetch_all, fetch_one
 
 from beanie import init_beanie
 from motor.motor_asyncio import AsyncIOMotorClient

@@ -1,10 +1,28 @@
 /** @type {import('next').NextConfig} */
 
-const localhostUrl = `http://127.0.0.1:8000`;
+import path from "path";
+import dotenv from "dotenv";
+import dotenvExpand from "dotenv-expand";
+
+const loadEnv = (filePath) => {
+  const env = dotenv.config({ path: filePath });
+  dotenvExpand.expand(env);
+};
+
+loadEnv(path.resolve(process.cwd(), ".env"));
+loadEnv(path.resolve(process.cwd(), ".env.local"));
+
+// const localhostUrl = `http://${process.env.HOST}:${process.env.BAK_PORT}`;
+const localhostUrl = `http://backend:${process.env.BAK_PORT}`;
+
+const localEnv = {
+  UPLOADTHING_SECRET: process.env.UPLOADTHING_SECRET,
+  NEXT_PUBLIC_UPLOADTHING_APP_ID: process.env.NEXT_PUBLIC_UPLOADTHING_APP_ID,
+};
 
 const nextConfig = {
+  env: localEnv,
   images: {
-    domains: ["uploadthing.com", "utfs.io"],
     remotePatterns: [
       {
         protocol: "https",

@@ -1,7 +1,8 @@
 from contextlib import asynccontextmanager
 
-from api.app.db import init_db
-from api.app.routers import spells
+from app.db import init_db
+from app.config.settings import settings
+from app.routers import spells
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
@@ -19,7 +20,10 @@ app.include_router(spells.router, prefix="/api")
 
 
 origins = [
-    "http://127.0.0.1:8000/",
+    f"http://localhost:{settings.PORT}",
+    f"http://localhost:{settings.FRONT_PORT}",
+    f"http://{settings.HOST}:{settings.FRONT_PORT}",
+    f"http://frontend:{settings.FRONT_PORT}",
 ]
 
 
@@ -27,6 +31,6 @@ app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
     allow_credentials=True,
-    allow_methods=["*"],
+    allow_methods=["GET"],
     allow_headers=["*"],
 )

@@ -1,6 +1,6 @@
 from typing import Optional
 
-from api.app.enums import (
+from app.enums import (
     Classes,
     Components,
     DamageTypes,
@@ -8,7 +8,7 @@ from api.app.enums import (
     MagicSchools,
     Subclasses,
 )
-from api.app.models import CoreDetails, DCType, DamageType
+from app.models import CoreDetails, DCType, DamageType
 from pydantic import BaseModel, ConfigDict, field_validator
 
 

@@ -1,19 +1,19 @@
 {
-  "name": "dnd_explorer",
+  "name": "frontend",
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "fastapi-dev": "pip install -r requirements.txt && uvicorn api.main:app --reload",
-    "next-dev": "next dev",
-    "dev": "concurrently \"npm run next-dev\" \"npm run fastapi-dev\"",
+    "dev": "next dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
   },
   "dependencies": {
     "@uploadthing/react": "^6.6.0",
-    "concurrently": "^8.2.2",
     "clsx": "^2.1.1",
+    "concurrently": "^8.2.2",
+    "dotenv": "^16.4.5",
+    "dotenv-expand": "^11.0.6",
     "lucide-react": "^0.390.0",
     "next": "^14.2.4",
     "react": "^18",

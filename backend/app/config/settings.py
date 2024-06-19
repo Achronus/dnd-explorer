@@ -1,6 +1,6 @@
 import os
 
-from api.utils.fileloader import FileLoader
+from utils.fileloader import FileLoader
 
 
 class Settings:
@@ -14,6 +14,10 @@ class Settings:
     DB_URL = os.getenv("DB_URL")
     DB_NAME = os.getenv("DB_NAME")
     DB_SPELLS_COLLECTION = os.getenv("DB_SPELLS_COLLECTION_NAME")
+
+    HOST = os.getenv("HOST")
+    PORT = int(os.getenv("BAK_PORT"))
+    FRONT_PORT = int(os.getenv("FNT_PORT"))
 
 
 settings = Settings()

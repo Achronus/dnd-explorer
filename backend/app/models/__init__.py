@@ -1,6 +1,6 @@
 from typing import Optional
 
-from api.app.config.settings import settings
+from app.config.settings import settings
 
 from beanie import Document
 from pydantic import BaseModel

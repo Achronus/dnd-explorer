@@ -1,0 +1,45 @@
+# Run command:
+# docker-compose up -d --build
+
+# Exit command:
+# docker-compose down
+
+services:
+  backend:
+    container_name: backend
+    build:
+      context: .
+      dockerfile: Dockerfile.backend
+      args:
+        POETRY_VERSION: ${POETRY_VERSION}
+        PORT: ${BAK_PORT}
+        PYTHON_VERSION: ${PYTHON_SITE_PACKAGES_VERSION}
+        BUILD_VERSION: ${PYTHON_BUILD_VERSION}
+        ENV_MODE: dev
+    ports:
+      - "${BAK_PORTS}"
+    volumes:
+      - .:/${PROJECT_NAME}
+    networks:
+      - app_network
+
+  frontend:
+    container_name: frontend
+    build:
+      context: .
+      dockerfile: Dockerfile.frontend
+      target: development
+      args:
+        PORT: ${FNT_PORT}
+        BUILD_VERSION: ${BUN_VERSION}
+    ports:
+      - "${FNT_PORTS}"
+    volumes:
+      - .:/${PROJECT_NAME}
+    networks:
+      - app_network
+
+
+networks:
+  app_network:
+    driver: bridge

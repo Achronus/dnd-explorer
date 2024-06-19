@@ -1,5 +1,5 @@
-from api.app.models import __beanie_models__
-from api.app.config.settings import settings
+from app.models import __beanie_models__
+from app.config.settings import settings
 
 from beanie import init_beanie
 from motor.motor_asyncio import AsyncIOMotorClient

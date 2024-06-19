@@ -1,6 +1,6 @@
 import asyncio
 from typing import Optional
-from api.app.enums import (
+from app.enums import (
     CATEGORY_KEY_MAPPING,
     CATEGORY_MAPPING,
     COMPONENT_NAME_MAPPING,
@@ -14,8 +14,8 @@ from api.app.enums import (
     SpellQueryKeys,
     Subclasses,
 )
-from api.app.models import DBSpellDetails
-from api.app.models.local import (
+from app.models import DBSpellDetails
+from app.models.local import (
     CategoryCounts,
     CategoryCountsResponse,
     CategoryValues,
@@ -32,7 +32,7 @@ from fastapi import HTTPException, APIRouter, Request
 router = APIRouter(prefix="/spells", tags=["spells"])
 
 
-@router.get("/", response_model=SpellOverviewResponse)
+@router.get("", response_model=SpellOverviewResponse)
 async def spells_overview(
     limit: Optional[int] = None,
     skip: Optional[int] = None,

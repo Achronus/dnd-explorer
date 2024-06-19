@@ -163,7 +163,7 @@ const Homepage = () => {
       </Hero>
       {error ? (
         <section className="grid gap-8 m-20 items-center justify-center">
-          {error && <div>Data error: {error}</div>}
+          {error && <div>Data error: {JSON.stringify(error)}</div>}
         </section>
       ) : isLoading ? (
         <section className="flex flex-col gap-8 m-10 items-center justify-center">
