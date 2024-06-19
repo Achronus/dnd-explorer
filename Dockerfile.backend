@@ -29,7 +29,7 @@ ENV PYTHONFAULTHANDLER=1 \
     POETRY_VERSION=${POETRY_VERSION}
 
 # Copy project and poetry files
-COPY /backend .env.local /app/
+COPY /backend /app/
 
 # install system dependencies, update pip, install poetry, its packages, and cleanup
 RUN apk update && \
