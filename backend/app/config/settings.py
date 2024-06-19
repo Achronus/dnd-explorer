@@ -12,8 +12,8 @@ class Settings:
     FILEPATHS = __fileloader.FILEPATHS
 
     DB_URL = os.getenv("DB_URL")
-    DB_NAME = os.getenv("DB_NAME")
-    DB_SPELLS_COLLECTION = os.getenv("DB_SPELLS_COLLECTION_NAME")
+    DB_NAME = "spells"
+    DB_SPELLS_COLLECTION = "detail"
 
     HOST = os.getenv("HOST")
     PORT = int(os.getenv("BAK_PORT"))
