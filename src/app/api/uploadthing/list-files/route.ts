@@ -1,33 +1,40 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { UTApi } from "uploadthing/server";
 
 const utapi = new UTApi({
   apiKey: process.env.UPLOADTHING_SECRET,
 });
 
-export async function GET(request: Request) {
+export async function GET(req: NextRequest) {
   try {
     const imgData = await utapi.listFiles();
 
     let filenames: string[] = [];
     let imgUrls: string[] = [];
 
-    request.url.split("?").forEach((item) => {
-      if (item.startsWith("filenames")) {
-        filenames = item.split("=")[1].split(",");
-      }
-    });
+    const url = req.nextUrl;
+    if (url.searchParams.has("filenames")) {
+      filenames = (url.searchParams.get("filenames") as string).split(",");
 
-    imgData.files.map((file) => {
-      filenames.map((name) => {
-        if (file.name.split(".")[0] === name) {
+      filenames.forEach((name) => {
+        const file = imgData.files.find(
+          (file) => file.name.split(".")[0] === name
+        );
+        if (file) {
           imgUrls.push(file.key);
         }
       });
-    });
 
-    return NextResponse.json(imgUrls);
+      if (imgUrls.length === 0) {
+        return NextResponse.json({ message: "No files found." });
+      }
+      return NextResponse.json(imgUrls);
+    }
+    return NextResponse.json({ message: "Missing query parameters." });
   } catch (error: any) {
-    throw new Error(error.message);
+    return NextResponse.json({
+      message: "Unable to fetch files.",
+      error: error,
+    });
   }
 }

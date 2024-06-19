@@ -14,12 +14,10 @@ const useFetchData = <T,>(url: string) => {
       try {
         const response = await fetch(url);
 
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
+        if (response.ok) {
+          const result = await response.json();
+          setData(result);
         }
-
-        const result = await response.json();
-        setData(result);
       } catch (error: any) {
         console.error("Error fetching data:", error);
         setError(error);

@@ -15,26 +15,29 @@ const useFetchImgs = (imgNames: string) => {
 
     const fetchUrl = async () => {
       try {
-        const response = await fetch(`${UTListFileUrl}?filenames=${imgNames}`);
-
-        if (!response.ok) {
-          throw new Error("Failed to fetch images");
-        }
-
-        const urlTemplate = `https://utfs.io/a/${process.env.NEXT_PUBLIC_UPLOADTHING_APP_ID}`;
-        let imgUrls: UTImage[] = [];
-
-        const data: string[] = await response.json();
-        const imgData = zip(imgNames.split(","), data);
-
-        imgData.map(([name, url]) => {
-          imgUrls.push({
-            name: name,
-            url: `${urlTemplate}/${url}`,
-          });
+        const response = await fetch(`${UTListFileUrl}?filenames=${imgNames}`, {
+          headers: {
+            Accept: "application/json",
+            method: "GET",
+          },
         });
 
-        setImgUrls(imgUrls);
+        if (response.ok) {
+          const urlTemplate = `https://utfs.io/a/${process.env.NEXT_PUBLIC_UPLOADTHING_APP_ID}`;
+          let imgUrls: UTImage[] = [];
+
+          const data: string[] = await response.json();
+          const imgData = zip(imgNames.split(","), data);
+
+          imgData.map(([name, url]) => {
+            imgUrls.push({
+              name: name,
+              url: `${urlTemplate}/${url}`,
+            });
+          });
+
+          setImgUrls(imgUrls);
+        }
       } catch (error: any) {
         console.error("Error fetching images:", error);
         setError(error);

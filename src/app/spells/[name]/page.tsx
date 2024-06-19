@@ -1,5 +1,6 @@
 "use client";
 
+import CardImage from "@/components/CardImage";
 import useFetchData from "@/hooks/useFetchData";
 import { CoreDetails, SpellCardDetails } from "@/types/api";
 import {
@@ -20,13 +21,8 @@ import {
 } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import CardImage from "./CardImage";
 
-const SpellDetails = ({
-  data,
-}: {
-  data: SpellCardDetails;
-}) => {
+const SpellDetails = ({ data }: { data: SpellCardDetails }) => {
   const dmgArray = (dmgValues: [string, string][]) => {
     let strArray: string[] = [];
     Object.entries(dmgValues).map(([level, dice]) => {
@@ -87,9 +83,7 @@ const SpellDetails = ({
     },
     {
       label: "Components",
-      value: data.components
-        ? data.components.join(", ")
-        : "-",
+      value: data.components ? data.components.join(", ") : "-",
       Icon: Puzzle,
     },
     {
@@ -99,9 +93,7 @@ const SpellDetails = ({
     },
     {
       label: "Damage Type",
-      value: data.damage
-        ? data.damage.damage_type.name
-        : "-",
+      value: data.damage ? data.damage.damage_type.name : "-",
       Icon: Skull,
     },
     // Row 3
@@ -218,8 +210,9 @@ const Page = () => {
   const pathname = usePathname();
   const [spellName, setSpellName] = useState("");
 
-  const { data, isLoading, error } =
-    useFetchData<SpellCardDetails>(`/api/${pathname}`);
+  const { data, isLoading, error } = useFetchData<SpellCardDetails>(
+    `/api/${pathname}`
+  );
 
   useEffect(() => {
     if (!pathname) {
@@ -243,9 +236,7 @@ const Page = () => {
             <>
               <CardImage spellName={spellName} />
               <div className="lg:col-span-9 flex flex-col flex-grow gap-10 bg-base-200 p-4 rounded-lg">
-                <h1 className="font-medium text-4xl">
-                  {data.name}
-                </h1>
+                <h1 className="font-medium text-4xl">{data.name}</h1>
                 <SpellDetails data={data} />
               </div>
             </>
