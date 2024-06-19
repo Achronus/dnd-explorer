@@ -136,7 +136,7 @@ GitHub.sublime-settings
 .history
 
 # dependencies
-frontend/node_modules
+node_modules
 /.pnp
 .pnp.js
 .yarn/install-state.gz
@@ -145,7 +145,7 @@ frontend/node_modules
 /coverage
 
 # next.js
-frontend/.next/
+.next/
 /out/
 
 # production
