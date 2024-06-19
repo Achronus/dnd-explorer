@@ -29,7 +29,7 @@ ENV PYTHONFAULTHANDLER=1 \
     POETRY_VERSION=${POETRY_VERSION}
 
 # Copy project and poetry files
-COPY /backend .env /app/
+COPY /backend .env.local /app/
 
 # install system dependencies, update pip, install poetry, its packages, and cleanup
 RUN apk update && \
@@ -46,11 +46,13 @@ FROM base as runtime
 
 ARG PYTHON_VERSION && \
     PORT && \
-    ENV_MODE
+    ENV_MODE && \
+    HOST 
 
 ENV PACKAGE_DIR=/usr/local/lib/python${PYTHON_VERSION}/site-packages \
     PORT=${PORT} \
-    ENV_MODE=${ENV_MODE}
+    ENV_MODE=${ENV_MODE} \
+    HOST=${HOST}
 
 # Copy files from builder
 COPY --from=builder /app /app/
@@ -61,4 +63,4 @@ EXPOSE $PORT
 
 # Run server
 # CMD ["sleep", "infinity"]
-CMD python -m build --env $ENV_MODE
+CMD python -m build --env $ENV_MODE --host $HOST --port $PORT

@@ -13,11 +13,3 @@ services:
     build:
       args:
         ENV_MODE: prod
-
-  frontend:
-    extends:
-      file: docker-compose.yml
-      service: frontend
-    container_name: frontend
-    build:
-      target: production

@@ -15,9 +15,5 @@ class Settings:
     DB_NAME = "spells"
     DB_SPELLS_COLLECTION = "detail"
 
-    HOST = os.getenv("HOST")
-    PORT = int(os.getenv("BAK_PORT"))
-    FRONT_PORT = int(os.getenv("FNT_PORT"))
-
 
 settings = Settings()
