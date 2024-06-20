@@ -1,5 +1,5 @@
 {
-  "name": "frontend",
+  "name": "dnd-explorer",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -11,7 +11,6 @@
   "dependencies": {
     "@uploadthing/react": "^6.6.0",
     "clsx": "^2.1.1",
-    "concurrently": "^8.2.2",
     "dotenv": "^16.4.5",
     "dotenv-expand": "^11.0.6",
     "lucide-react": "^0.390.0",
